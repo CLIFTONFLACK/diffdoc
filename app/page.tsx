@@ -49,14 +49,14 @@ export default function Home() {
             <img
               src="/landing/office.webp"
               alt=""
-              className="h-full w-full object-cover object-[80%_center] [mask-image:linear-gradient(to_right,transparent,black_45%)] dark:opacity-40"
+              className="h-full w-full object-cover object-[80%_center] [mask-image:linear-gradient(to_right,transparent,black_35%)] dark:opacity-40"
             />
           </picture>
           {/* White scrim over the photo's left half so the headline and copy stay
               readable. Theme-aware: a white wash in light mode, dark in dark. */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 -z-[5] hidden bg-gradient-to-r from-background from-30% via-background/85 via-55% to-transparent to-80% sm:block"
+            className="absolute inset-0 -z-[5] hidden bg-gradient-to-r from-background from-10% via-background/55 via-45% to-transparent to-68% sm:block"
           />
 
           {/* In-hero top bar: logo left, theme toggle + auth right */}
