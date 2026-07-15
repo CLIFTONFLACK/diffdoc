@@ -47,6 +47,8 @@ import type { DiffChunk } from "@/lib/diff/types";
 import { ReportView } from "./report-view";
 import { BuildStamp } from "./build-stamp";
 import { Wordmark } from "./wordmark";
+import { ThemeToggle } from "./theme-toggle";
+import { useSignupGate } from "./signup-prompt";
 
 export type ParagraphSkeleton = {
   style: string;
@@ -123,7 +125,7 @@ const CATEGORY_CHIP: { id: Category; label: string; activeClass: string }[] = [
   { id: "flagged", label: "Flagged", activeClass: "bg-flag-wash border-flag/40 text-flag" },
   { id: "added", label: "Added", activeClass: "bg-leaf-wash border-leaf/40 text-leaf-deep" },
   { id: "removed", label: "Removed", activeClass: "bg-paper-deep border-ink/30 text-ink" },
-  { id: "changed", label: "Changed", activeClass: "bg-white border-leaf-deep/50 text-leaf-deep" },
+  { id: "changed", label: "Changed", activeClass: "bg-card border-leaf-deep/50 text-leaf-deep" },
 ];
 
 const ALL_ACTIONS: ChangeAction[] = [
@@ -162,6 +164,9 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
   const [flash, setFlash] = useState<{ pane: Pane; index: number } | null>(null);
   const [downloadOpen, setDownloadOpen] = useState(false);
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
+
+  // Front-end sign-up wall for the "advanced" actions (download, comments, edits).
+  const { promptSignup, gate } = useSignupGate();
 
   // Annotations: comments on both documents, edits on Primary only.
   const [comments, setComments] = useState<CommentRow[]>(data.comments);
@@ -567,11 +572,13 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
 
   function openComposer(kind: "comment" | "edit") {
     if (!selAction) return;
-    setComposer({
-      ...selAction,
-      kind,
-      value: kind === "edit" ? selAction.text : "",
-    });
+    // Comments & edits are a gated feature — prompt sign-up instead of opening
+    // the composer until accounts are live.
+    promptSignup(
+      kind === "edit"
+        ? "Create a free account to make tracked edits on the primary document."
+        : "Create a free account to add comments to this comparison.",
+    );
     setSelAction(null);
     window.getSelection()?.removeAllRanges();
   }
@@ -680,7 +687,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
                 onChange={(e) => setTitleDraft(e.target.value)}
                 onKeyDown={(e) => e.key === "Escape" && setEditingTitle(false)}
                 maxLength={120}
-                className="text-base font-display font-bold text-ink bg-white border border-line rounded px-2 py-1 w-80 focus:outline-none focus:ring-1 focus:ring-leaf"
+                className="text-base font-display font-bold text-ink bg-card border border-line rounded px-2 py-1 w-80 focus:outline-none focus:ring-1 focus:ring-leaf"
               />
               <button type="submit" className="p-1 text-leaf-deep hover:bg-leaf-wash rounded cursor-pointer" aria-label="Save title">
                 <Check className="w-4 h-4" />
@@ -713,7 +720,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
           <button
             onClick={() => void saveTask()}
             disabled={saveState === "saving"}
-            className="px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.12em] rounded-lg border border-ink/60 text-ink bg-white hover:bg-paper-deep transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+            className="px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.12em] rounded-lg border border-ink/60 text-ink bg-card hover:bg-paper-deep transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
           >
             {saveState === "saved" ? (
               <>
@@ -727,8 +734,12 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
           </button>
           <div className="relative">
             <button
-              onClick={() => setDownloadOpen((v) => !v)}
-              className="px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.12em] rounded-lg bg-leaf text-white hover:bg-leaf-deep transition-colors cursor-pointer flex items-center gap-1.5"
+              onClick={() =>
+                promptSignup(
+                  "Create a free account to download marked-up .docx & .pdf exports and the audit report.",
+                )
+              }
+              className="px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.12em] rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors cursor-pointer flex items-center gap-1.5"
               aria-haspopup="menu"
               aria-expanded={downloadOpen}
             >
@@ -738,7 +749,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
             {downloadOpen && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setDownloadOpen(false)} />
-                <div className="absolute right-0 top-full mt-1.5 z-50 bg-white border border-line rounded-lg shadow-lg py-1 w-56" role="menu">
+                <div className="absolute right-0 top-full mt-1.5 z-50 bg-card border border-line rounded-lg shadow-lg py-1 w-56" role="menu">
                   <a
                     href={`/api/comparisons/${comparison.id}/download?doc=a`}
                     onClick={() => setDownloadOpen(false)}
@@ -775,11 +786,12 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
           >
             <LayoutGrid className="w-3.5 h-3.5" /> My Tasks
           </a>
+          <ThemeToggle />
         </div>
       </header>
 
       <div className="flex-1 min-h-0 flex print-expand">
-        <aside className="w-72 border-r border-line bg-white flex flex-col print-hide">
+        <aside className="w-72 border-r border-line bg-card flex flex-col print-hide">
           {/* View switcher */}
           <div className="p-3 border-b border-line">
             <div className="flex items-center gap-1 bg-paper rounded-lg p-0.5 border border-line">
@@ -885,7 +897,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
               <button
                 onClick={scrollBothToTop}
                 title="Scroll both documents back to the top"
-                className="px-2 py-1.5 text-[11px] font-medium rounded-lg border bg-white text-ink-soft border-line hover:border-ink/40 flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                className="px-2 py-1.5 text-[11px] font-medium rounded-lg border bg-card text-ink-soft border-line hover:border-ink/40 flex items-center justify-center gap-1 transition-colors cursor-pointer"
               >
                 <ArrowUpToLine className="w-3 h-3" />
                 Top
@@ -893,7 +905,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
               <button
                 onClick={alignPanes}
                 title="Align the other document to your current reading position"
-                className="px-2 py-1.5 text-[11px] font-medium rounded-lg border bg-white text-ink-soft border-line hover:border-ink/40 flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                className="px-2 py-1.5 text-[11px] font-medium rounded-lg border bg-card text-ink-soft border-line hover:border-ink/40 flex items-center justify-center gap-1 transition-colors cursor-pointer"
               >
                 <Crosshair className="w-3 h-3" />
                 Align
@@ -905,7 +917,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
                 className={`px-2 py-1.5 text-[11px] font-medium rounded-lg border flex items-center justify-center gap-1 transition-colors cursor-pointer ${
                   syncOn
                     ? "bg-ink text-paper border-ink"
-                    : "bg-white text-ink-soft border-line hover:border-ink/40"
+                    : "bg-card text-ink-soft border-line hover:border-ink/40"
                 }`}
               >
                 <ArrowLeftRight className={`w-3 h-3 ${syncOn ? "text-leaf-ring" : ""}`} />
@@ -1038,8 +1050,8 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
                   : entry.category === "added"
                     ? "border-l-leaf bg-leaf-wash/50"
                     : entry.category === "changed"
-                      ? "border-l-leaf-deep bg-white"
-                      : "border-l-ink-faint bg-white";
+                      ? "border-l-leaf-deep bg-card"
+                      : "border-l-ink-faint bg-card";
               return (
                 <button
                   key={entry.id}
@@ -1140,6 +1152,11 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
                 quote: e.before_text ?? "",
                 replacement: e.after_text ?? "",
               }))}
+              onDownload={() =>
+                promptSignup(
+                  "Create a free account to download the audit report as a PDF.",
+                )
+              }
             />
           )}
         </main>
@@ -1177,7 +1194,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
         <>
           <div className="fixed inset-0 z-40" onClick={() => setComposer(null)} />
           <div
-            className="fixed z-50 bg-white border border-ink/20 rounded-lg shadow-xl p-3 w-80"
+            className="fixed z-50 bg-card border border-ink/20 rounded-lg shadow-xl p-3 w-80"
             style={{
               left: Math.max(8, Math.min(composer.x - 160, window.innerWidth - 340)),
               top: Math.min(composer.y + 14, window.innerHeight - 220),
@@ -1257,7 +1274,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
             }}
           />
           <div
-            className="fixed z-50 bg-white border border-ink/20 rounded-lg shadow-lg py-1 text-sm"
+            className="fixed z-50 bg-card border border-ink/20 rounded-lg shadow-lg py-1 text-sm"
             style={{
               left: Math.min(ctxMenu.x, window.innerWidth - 260),
               top: Math.min(ctxMenu.y, window.innerHeight - 60),
@@ -1284,6 +1301,8 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
         </div>
         <BuildStamp />
       </footer>
+
+      {gate}
     </div>
   );
 }
@@ -1341,7 +1360,7 @@ function FilterChip({
     <button
       onClick={onClick}
       className={`px-2 py-0.5 text-xs rounded-lg border flex items-center gap-1 cursor-pointer transition-colors ${
-        active ? activeClass : "bg-white border-line text-ink-faint"
+        active ? activeClass : "bg-card border-line text-ink-faint"
       }`}
     >
       {label} <span className="font-mono">{count}</span>
@@ -1502,7 +1521,7 @@ function DocPane({
       {/* Stamp badge above the document — outlined, inked slightly off-true */}
       <div className="flex items-end justify-between px-1 pb-2">
         <div
-          className={`flex flex-col px-3 py-1.5 border-[1.5px] border-ink/70 rounded bg-white/70 min-w-0 max-w-[75%] ${
+          className={`flex flex-col px-3 py-1.5 border-[1.5px] border-ink/70 rounded bg-card/70 min-w-0 max-w-[75%] ${
             pane === "a" ? "-rotate-1" : "rotate-1"
           }`}
         >
@@ -1516,7 +1535,7 @@ function DocPane({
           {meta?.wordCount ? `${meta.wordCount.toLocaleString()} words` : ""}
         </span>
       </div>
-      <div className="flex-1 flex flex-col bg-white min-h-0 rounded-xl border border-line overflow-hidden">
+      <div className="flex-1 flex flex-col bg-card min-h-0 rounded-xl border border-line overflow-hidden">
         <div
           ref={scrollRef}
           onScroll={onScroll}

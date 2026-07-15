@@ -2,12 +2,122 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  height: 100%;
-  background: #faf7f0;
-  color: #232230;
-  -webkit-font-smoothing: antialiased;
+/* ─────────────────────────────────────────────────────────────────────────────
+   DiffDoc design tokens — SLC-CRM "Swiss minimalism" system (teal + slate).
+   Ported from SLC-CDG-CRM/design-system/slc-crm/MASTER.md. Values are authored
+   as HSL channels so Tailwind's `hsl(var(--x) / <alpha-value>)` mappings support
+   opacity modifiers (e.g. bg-primary/90). Every color is theme-flipped, so the
+   whole app — including the legacy proofreader tokens — gets dark mode for free.
+   ──────────────────────────────────────────────────────────────────────────── */
+:root {
+  --radius: 0.5rem;
+
+  /* shadcn / component tokens */
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 175 77% 26%; /* trust teal — #0F766E */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 19% 35%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 163 94% 24%;
+  --warning: 26 90% 37%;
+  --info: 201 96% 32%; /* professional blue — links / info */
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 175 77% 26%;
+
+  /* legacy proofreader tokens, remapped onto the CRM palette */
+  --paper: 0 0% 100%;
+  --paper-deep: 210 40% 98%;
+  --line: 214 32% 91%;
+  --ink: 222 47% 11%;
+  --ink-soft: 215 19% 35%;
+  --ink-faint: 215 16% 47%;
+  --leaf: 175 77% 26%; /* accent → teal */
+  --leaf-deep: 176 69% 22%;
+  --leaf-wash: 152 81% 96%;
+  --leaf-ring: 171 77% 64%;
+  --flag: 0 72% 51%; /* risk → red */
+  --flag-wash: 0 86% 97%;
+  --pen: 262 83% 58%; /* edits → violet */
+  --pen-wash: 251 100% 97%;
+  --note: 26 90% 37%; /* comments → amber */
+  --note-wash: 48 100% 96%;
+}
+
+.dark {
+  --background: 222 47% 8%;
+  --foreground: 214 32% 91%;
+  --card: 222 47% 11%;
+  --card-foreground: 214 32% 91%;
+  --popover: 222 47% 11%;
+  --popover-foreground: 214 32% 91%;
+  --primary: 173 80% 40%; /* teal-500 */
+  --primary-foreground: 179 84% 10%;
+  --secondary: 217 33% 17%;
+  --secondary-foreground: 214 32% 91%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 217 33% 17%;
+  --accent-foreground: 214 32% 91%;
+  --destructive: 0 91% 71%;
+  --destructive-foreground: 0 75% 15%;
+  --success: 156 72% 67%;
+  --warning: 46 97% 65%;
+  --info: 199 95% 74%;
+  --border: 217 33% 17%;
+  --input: 215 25% 27%;
+  --ring: 172 66% 50%;
+
+  --paper: 222 47% 8%;
+  --paper-deep: 222 47% 11%;
+  --line: 217 33% 17%;
+  --ink: 214 32% 91%;
+  --ink-soft: 215 20% 65%;
+  --ink-faint: 215 19% 55%;
+  --leaf: 173 80% 40%;
+  --leaf-deep: 172 66% 50%;
+  --leaf-wash: 179 84% 10%;
+  --leaf-ring: 172 66% 50%;
+  --flag: 0 91% 71%;
+  --flag-wash: 0 75% 15%;
+  --pen: 255 92% 76%;
+  --pen-wash: 260 55% 18%;
+  --note: 46 97% 65%;
+  --note-wash: 30 60% 14%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html,
+  body {
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    @apply bg-background text-ink font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* UI base is comfortable, but keep inputs >=16px on mobile to avoid iOS zoom */
+  @media (max-width: 640px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
+  }
 }
 
 /* Print = "Download PDF" for the Report tab: hide app chrome, unclip the

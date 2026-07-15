@@ -31,6 +31,7 @@ export function ReportView({
   entries,
   comments = [],
   edits = [],
+  onDownload,
 }: {
   title: string;
   createdAt: string;
@@ -40,6 +41,8 @@ export function ReportView({
   entries: ReportEntry[];
   comments?: ReportComment[];
   edits?: ReportEdit[];
+  /** When provided, overrides the default print action (used to gate download). */
+  onDownload?: () => void;
 }) {
   const flagged = entries.filter((e) => e.reasons.length > 0);
   const actionCounts = new Map<ChangeAction, number>();
@@ -70,8 +73,8 @@ export function ReportView({
             </p>
           </div>
           <button
-            onClick={() => window.print()}
-            className="print-hide px-4 py-2 bg-leaf text-white rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-leaf-deep"
+            onClick={() => (onDownload ? onDownload() : window.print())}
+            className="print-hide px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-primary/90"
           >
             <Download className="w-4 h-4" /> Download PDF
           </button>
@@ -95,7 +98,7 @@ export function ReportView({
         <SectionTitle>Documents</SectionTitle>
         <div className="grid grid-cols-2 gap-4 mb-8">
           {[primary, comparator].map((doc) => (
-            <div key={doc.role} className="bg-white border border-line rounded-xl p-5">
+            <div key={doc.role} className="bg-card border border-line rounded-xl p-5">
               <div className="text-[9px] font-mono uppercase tracking-[0.2em] text-ink-faint font-bold mb-1">
                 {doc.role}
               </div>
@@ -117,7 +120,7 @@ export function ReportView({
         </div>
 
         <SectionTitle>Changes by action</SectionTitle>
-        <div className="bg-white border border-line rounded-xl divide-y divide-line mb-8">
+        <div className="bg-card border border-line rounded-xl divide-y divide-line mb-8">
           {[...actionCounts.entries()]
             .sort((x, y) => y[1] - x[1])
             .map(([action, count]) => (
@@ -180,7 +183,7 @@ export function ReportView({
               {edits.map((e, i) => (
                 <div
                   key={i}
-                  className="bg-white border border-line border-l-2 border-l-pen rounded-xl px-4 py-3"
+                  className="bg-card border border-line border-l-2 border-l-pen rounded-xl px-4 py-3"
                 >
                   <div className="text-[10px] font-mono uppercase tracking-wider text-pen mb-1">
                     Edit · Primary
@@ -216,7 +219,7 @@ export function ReportView({
               {comments.map((c, i) => (
                 <div
                   key={i}
-                  className={`bg-white border border-line border-l-2 border-l-note rounded-xl px-4 py-3 ${
+                  className={`bg-card border border-line border-l-2 border-l-note rounded-xl px-4 py-3 ${
                     c.resolved ? "opacity-60" : ""
                   }`}
                 >
@@ -272,7 +275,7 @@ function StatCard({
   return (
     <div
       className={`rounded-lg p-5 border ${
-        highlight ? "bg-flag-wash border-flag/40" : "bg-white border-line"
+        highlight ? "bg-flag-wash border-flag/40" : "bg-card border-line"
       }`}
     >
       <div className="text-[9px] font-mono uppercase tracking-[0.2em] text-ink-faint font-bold">
@@ -307,7 +310,7 @@ function HighlightCard({
   const border =
     tone === "red" ? "border-l-flag" : tone === "green" ? "border-l-leaf" : "border-l-ink-faint";
   return (
-    <div className={`bg-white border border-line border-l-2 ${border} rounded-lg px-4 py-3`}>
+    <div className={`bg-card border border-line border-l-2 ${border} rounded-lg px-4 py-3`}>
       <div className="text-[10px] font-mono uppercase tracking-wider text-ink-faint mb-1">
         {ACTION_LABELS[entry.action]}
         {entry.reasons.length > 0 &&
