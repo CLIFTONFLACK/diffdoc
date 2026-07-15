@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils";
 
 /**
  * Full brand lockup — the shared CliftonAi mark (same segmented-C molecule icon
- * as CliftonAi-CRM) + "CliftonAi" wordmark + "-DiffDoc" product suffix. Used big
- * in the marketing hero's top bar and small in the footer. For compact in-app
- * placements use `Wordmark` instead.
+ * as CliftonAi-CRM) + "CliftonAi" wordmark + "-DiffDoc" product suffix. `size="lg"`
+ * for the marketing hero's top bar; `size="sm"` everywhere else (footer, in-app
+ * headers, auth).
  */
 export function Logo({
   size = "lg",

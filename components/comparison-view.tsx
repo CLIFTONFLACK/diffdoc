@@ -46,7 +46,7 @@ import {
 import type { DiffChunk } from "@/lib/diff/types";
 import { ReportView } from "./report-view";
 import { BuildStamp } from "./build-stamp";
-import { Wordmark } from "./wordmark";
+import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 import { useSignupGate } from "./signup-prompt";
 
@@ -670,7 +670,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
       <header className="border-b border-line px-6 py-2.5 flex items-center justify-between gap-6 print-hide">
         <div className="flex items-center gap-5 min-w-0">
           <span className="flex-shrink-0">
-            <Wordmark size="text-xl" />
+            <Logo size="sm" />
           </span>
           <div className="w-px h-5 bg-line flex-shrink-0" />
           {editingTitle ? (

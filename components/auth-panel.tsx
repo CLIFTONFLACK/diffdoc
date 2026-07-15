@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-import { Wordmark } from "@/components/wordmark";
+import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { GoogleButton } from "@/components/signup-prompt";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,7 @@ export function AuthPanel({ mode }: { mode: "sign-in" | "sign-up" }) {
       <div className="flex flex-1 items-center justify-center px-4 pb-16">
         <div className="w-full max-w-sm">
           <div className="mb-6 text-center">
-            <Wordmark />
+            <Logo size="sm" />
             <h1 className="mt-4 font-display text-2xl font-semibold tracking-tight">
               {isSignUp ? "Create your free account" : "Welcome back"}
             </h1>

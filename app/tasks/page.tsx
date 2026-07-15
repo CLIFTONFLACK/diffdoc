@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { FileText, Loader2, Plus } from "lucide-react";
 import { BuildStamp } from "@/components/build-stamp";
-import { Wordmark } from "@/components/wordmark";
+import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 type Task = {
@@ -51,7 +51,7 @@ export default function TasksPage() {
   return (
     <div className="flex min-h-screen flex-col bg-background text-ink">
       <header className="flex items-center justify-between border-b border-line px-6 py-3 sm:px-8">
-        <Wordmark />
+        <Logo size="sm" />
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <a
