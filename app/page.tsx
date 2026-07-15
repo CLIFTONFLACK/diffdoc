@@ -11,9 +11,7 @@ import {
 
 import { UploadWidget } from "@/components/upload-widget";
 import { Pricing } from "@/components/pricing";
-import { Wordmark } from "@/components/wordmark";
 import { Logo } from "@/components/logo";
-import { HeroVisual } from "@/components/hero-visual";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -44,12 +42,22 @@ export default function Home() {
             visual bleeding in from the right behind the value prop and the
             live upload widget. */}
         <section className="relative isolate overflow-hidden border-b bg-background">
+          {/* Office backdrop bleeding in from the right, faded into the page on
+              the left — same treatment as the CliftonAi-CRM hero photo. */}
+          <picture className="absolute inset-y-0 left-[22%] right-0 -z-10 hidden sm:block">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/landing/office.webp"
+              alt=""
+              className="h-full w-full object-cover object-[80%_center] [mask-image:linear-gradient(to_right,transparent,black_45%)] dark:opacity-40"
+            />
+          </picture>
+          {/* White scrim over the photo's left half so the headline and copy stay
+              readable. Theme-aware: a white wash in light mode, dark in dark. */}
           <div
             aria-hidden="true"
-            className="absolute inset-y-0 left-[22%] right-0 -z-10 hidden sm:block"
-          >
-            <HeroVisual className="[mask-image:linear-gradient(to_right,transparent,black_45%)]" />
-          </div>
+            className="absolute inset-0 -z-[5] hidden bg-gradient-to-r from-background from-30% via-background/85 via-55% to-transparent to-80% sm:block"
+          />
 
           {/* In-hero top bar: logo left, theme toggle + auth right */}
           <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-y-3 px-6 pt-6 sm:flex-nowrap">
@@ -113,21 +121,31 @@ export default function Home() {
               </p>
             </div>
 
-            {/* The onboarding widget, embedded as the hero's interactive element */}
+            {/* The onboarding widget, embedded as the hero's interactive element.
+                The "start here" cue lives inside the card so it stays readable
+                over the photo backdrop. */}
             <div id="try" className="scroll-mt-24">
-              <div className="mb-3 flex items-center gap-2 text-sm font-medium text-ink-soft">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                  1
-                </span>
-                Start here — compare two documents
-              </div>
-              <UploadWidget />
+              <UploadWidget
+                heading={
+                  <>
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                      1
+                    </span>
+                    Start here — compare two documents
+                  </>
+                }
+              />
             </div>
           </div>
 
-          {/* Mobile-only: the hero visual stacks below as a plain card */}
+          {/* Mobile-only: the office backdrop stacks below as a plain banner */}
           <div aria-hidden="true" className="mx-auto w-full max-w-6xl px-6 pb-10 sm:hidden">
-            <HeroVisual className="h-64 overflow-hidden rounded-xl border bg-paper-deep" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/landing/office-mobile.webp"
+              alt=""
+              className="h-52 w-full overflow-hidden rounded-xl border object-cover"
+            />
           </div>
         </section>
 
@@ -228,7 +246,7 @@ export default function Home() {
 
       <footer className="border-t">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 text-sm text-ink-soft sm:flex-row">
-          <Wordmark size="text-xl" />
+          <Logo size="sm" />
           <div className="flex items-center gap-5">
             <Link href="#pricing" className="hover:text-ink">
               Pricing

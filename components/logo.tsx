@@ -1,20 +1,49 @@
 import Link from "next/link";
 
-import { LogoMark } from "@/components/logo-mark";
 import { cn } from "@/lib/utils";
 
 /**
- * Full lockup (mark + wordmark) for the marketing hero's in-hero top bar —
- * same icon-left, big-two-tone-wordmark structure as the CliftonAi-CRM logo.
- * For compact/in-app placements use `Wordmark` instead.
+ * Full brand lockup — the shared CliftonAi mark (same segmented-C molecule icon
+ * as CliftonAi-CRM) + "CliftonAi" wordmark + "-DiffDoc" product suffix. Used big
+ * in the marketing hero's top bar and small in the footer. For compact in-app
+ * placements use `Wordmark` instead.
  */
-export function Logo({ className }: { className?: string }) {
+export function Logo({
+  size = "lg",
+  className,
+}: {
+  size?: "lg" | "sm";
+  className?: string;
+}) {
+  const lg = size === "lg";
   return (
-    <Link href="/" className={cn("inline-flex items-center gap-3", className)}>
-      <LogoMark className="h-10 w-10 shrink-0 sm:h-14 sm:w-14 lg:h-16 lg:w-16" />
-      <span className="font-display text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
-        <span className="text-ink">Diff</span>
-        <span className="text-primary">Doc</span>
+    <Link
+      href="/"
+      aria-label="CliftonAi — DiffDoc"
+      className={cn("inline-flex items-center", lg ? "gap-3" : "gap-2", className)}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/landing/clifton-icon.webp"
+        alt=""
+        className={cn(
+          "shrink-0 object-contain",
+          lg ? "h-11 w-11 sm:h-14 sm:w-14 lg:h-[68px] lg:w-[68px]" : "h-8 w-8",
+        )}
+      />
+      <span className="flex items-end font-display font-bold leading-none tracking-tight">
+        <span className={lg ? "text-2xl sm:text-4xl lg:text-[44px]" : "text-xl"}>
+          <span className="text-ink">Clifton</span>
+          <span className="text-primary">Ai</span>
+        </span>
+        <span
+          className={cn(
+            "font-semibold text-primary",
+            lg ? "ml-0.5 pb-0.5 text-sm sm:text-lg lg:text-xl" : "ml-0.5 text-[0.7rem]",
+          )}
+        >
+          -DiffDoc
+        </span>
       </span>
     </Link>
   );

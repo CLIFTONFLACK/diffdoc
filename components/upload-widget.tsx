@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { FileText, Loader2, Upload, X } from "lucide-react";
 
@@ -16,7 +16,13 @@ type Side = "a" | "b";
  * off processing. Comparing is free and anonymous — the sign-up wall lives on the
  * result screen (download / comments / edits).
  */
-export function UploadWidget({ className }: { className?: string }) {
+export function UploadWidget({
+  className,
+  heading,
+}: {
+  className?: string;
+  heading?: ReactNode;
+}) {
   const router = useRouter();
   const [files, setFiles] = useState<{ a: File | null; b: File | null }>({
     a: null,
@@ -74,6 +80,11 @@ export function UploadWidget({ className }: { className?: string }) {
         className,
       )}
     >
+      {heading && (
+        <div className="mb-5 flex items-center gap-2 border-b pb-4 text-sm font-medium text-ink-soft">
+          {heading}
+        </div>
+      )}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FileSlot
           side="a"
