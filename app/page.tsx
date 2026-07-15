@@ -9,10 +9,12 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import { SiteHeader } from "@/components/site-header";
 import { UploadWidget } from "@/components/upload-widget";
 import { Pricing } from "@/components/pricing";
 import { Wordmark } from "@/components/wordmark";
+import { Logo } from "@/components/logo";
+import { HeroVisual } from "@/components/hero-visual";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -37,12 +39,36 @@ const STEPS = [
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
-
       <main className="flex-1">
-        {/* Hero — value prop on the left, the live upload widget on the right */}
-        <section className="border-b">
-          <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 py-16 lg:grid-cols-2 lg:py-24">
+        {/* Hero — big logo + nav inline (no separate header bar), a full-height
+            visual bleeding in from the right behind the value prop and the
+            live upload widget. */}
+        <section className="relative isolate overflow-hidden border-b bg-background">
+          <div
+            aria-hidden="true"
+            className="absolute inset-y-0 left-[22%] right-0 -z-10 hidden sm:block"
+          >
+            <HeroVisual className="[mask-image:linear-gradient(to_right,transparent,black_45%)]" />
+          </div>
+
+          {/* In-hero top bar: logo left, theme toggle + auth right */}
+          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-y-3 px-6 pt-6 sm:flex-nowrap">
+            <Logo />
+            <nav className="flex items-center gap-1 sm:gap-2">
+              <ThemeToggle />
+              <Link
+                href="/login"
+                className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
+              >
+                Sign in
+              </Link>
+              <Link href="/signup" className={cn(buttonVariants({ size: "sm" }))}>
+                Start free
+              </Link>
+            </nav>
+          </div>
+
+          <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 pb-16 pt-10 lg:grid-cols-2 lg:pb-24 lg:pt-16">
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-leaf-wash px-3 py-1 text-xs font-medium text-leaf-deep">
                 <Sparkles className="h-3.5 w-3.5" />
@@ -97,6 +123,11 @@ export default function Home() {
               </div>
               <UploadWidget />
             </div>
+          </div>
+
+          {/* Mobile-only: the hero visual stacks below as a plain card */}
+          <div aria-hidden="true" className="mx-auto w-full max-w-6xl px-6 pb-10 sm:hidden">
+            <HeroVisual className="h-64 overflow-hidden rounded-xl border bg-paper-deep" />
           </div>
         </section>
 
