@@ -31,18 +31,27 @@ export function Logo({
           lg ? "h-11 w-11 sm:h-14 sm:w-14 lg:h-[68px] lg:w-[68px]" : "h-8 w-8",
         )}
       />
-      <span className="flex items-end font-display font-bold leading-none tracking-tight">
+      <span className="flex items-center font-display font-bold leading-none tracking-tight">
         <span className={lg ? "text-2xl sm:text-4xl lg:text-[44px]" : "text-xl"}>
           <span className="text-ink">Clifton</span>
           <span className="text-primary">Ai</span>
         </span>
+        {/* Divider + product suffix — the shared CliftonAi lockup grammar
+            (wordmark | hairline | product name in the muted technical voice). */}
+        <span
+          aria-hidden="true"
+          className={cn(
+            "inline-block w-0.5 shrink-0 self-center bg-primary/60",
+            lg ? "mx-2.5 h-7 sm:h-9" : "mx-1.5 h-4",
+          )}
+        />
         <span
           className={cn(
-            "font-semibold text-primary",
-            lg ? "ml-0.5 pb-0.5 text-sm sm:text-lg lg:text-xl" : "ml-0.5 text-[0.7rem]",
+            "font-semibold text-ink-soft",
+            lg ? "text-lg sm:text-2xl lg:text-[26px]" : "text-sm",
           )}
         >
-          -DiffDoc
+          DiffDoc
         </span>
       </span>
     </Link>

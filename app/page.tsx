@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  ArrowUpRight,
   FileText,
   GitCompare,
   MessagesSquare,
@@ -34,6 +35,25 @@ const STEPS = [
   },
 ];
 
+/** Sibling CliftonAi products, for the cross-sell footer band. */
+const SIBLINGS = [
+  {
+    name: "CliftonAi CRM",
+    tag: "Leisure & licensed property",
+    href: "https://crm.cliftonai.co",
+  },
+  {
+    name: "CliftonAi ContentFlow",
+    tag: "Content operations for WordPress",
+    href: "https://flow.cliftonai.co",
+  },
+  {
+    name: "CliftonAi DealMaker",
+    tag: "Deal pipeline for small business",
+    href: "https://dealmaker.cliftonai.co",
+  },
+];
+
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -63,6 +83,15 @@ export default function Home() {
           <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-y-3 px-6 pt-6 sm:flex-nowrap">
             <Logo />
             <nav className="flex items-center gap-1 sm:gap-2">
+              <a
+                href="https://cliftonai.co"
+                target="_blank"
+                rel="noopener"
+                className="mr-1 hidden items-center gap-1 text-xs font-medium text-ink-faint transition-colors hover:text-primary sm:inline-flex"
+              >
+                Part of CliftonAi
+                <ArrowUpRight className="h-3 w-3" />
+              </a>
               <ThemeToggle />
               <Link
                 href="/login"
@@ -245,6 +274,35 @@ export default function Home() {
       </main>
 
       <footer className="border-t">
+        {/* More from CliftonAi — cross-sell band to sibling products */}
+        <div className="border-b bg-paper-deep/40">
+          <div className="mx-auto w-full max-w-6xl px-6 py-10">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint">
+              More from CliftonAi
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {SIBLINGS.map((s) => (
+                <a
+                  key={s.name}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener"
+                  className="group flex items-center justify-between gap-3 rounded-xl border bg-card px-4 py-3 transition-colors hover:border-primary/40"
+                >
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-semibold text-ink">
+                      {s.name}
+                    </span>
+                    <span className="block truncate text-xs text-ink-faint">
+                      {s.tag}
+                    </span>
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-ink-faint transition-colors group-hover:text-primary" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 text-sm text-ink-soft sm:flex-row">
           <Logo size="sm" />
           <div className="flex items-center gap-5">
