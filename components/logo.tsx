@@ -50,7 +50,7 @@ export function Logo({
         className,
       )}
     >
-      <BrandMark lg={lg} />
+      <BrandMark height={lg ? 40 : 28} />
       <span
         className={cn(
           "flex min-w-0 items-center font-display font-semibold leading-none tracking-[-0.02em]",
@@ -80,16 +80,19 @@ export function Logo({
  * The mark on its own — for tight chrome where the product word is already
  * stated nearby. Dimensions are fixed so the header doesn't reflow on load:
  * the viewBox is 654.5 × 518, so width tracks height at ~1.264:1.
+ *
+ * The cut is chosen from the height rather than passed in, so the brand book's
+ * 40px threshold can't be missed by a caller picking the wrong artwork.
  */
 export function BrandMark({
-  lg = false,
+  height = 28,
   className,
 }: {
-  lg?: boolean;
+  height?: number;
   className?: string;
 }) {
-  const cut = lg ? "brian-mark" : "brian-mark-compact";
-  const h = lg ? 40 : 28;
+  const cut = height >= 40 ? "brian-mark" : "brian-mark-compact";
+  const h = height;
   const w = Math.round(h * 1.2635);
 
   return (
@@ -116,5 +119,41 @@ export function BrandMark({
         className="hidden h-full w-full dark:block"
       />
     </span>
+  );
+}
+
+/**
+ * The "Built by GetBrian" footer credit, ported from ContentFlow's `.built-by`
+ * so every Brian product carries the same badge. Reference spec, read off
+ * flow.getbrian.xyz:
+ *
+ *   display inline-flex, align-items center, gap .5rem
+ *   border 1px solid var(--border), radius 999px, padding .35rem .8rem
+ *   colour var(--ink-muted); hover flips border and text to navy
+ *   img height 20px, width auto        b: display face, 600, navy
+ *
+ * Two deliberate departures:
+ *  • `whitespace-nowrap` — ContentFlow's pill wraps to two lines in a narrow
+ *    footer column, which reads as broken rather than as a badge.
+ *  • Dark mode, which ContentFlow has no need for: the mark reverses to the
+ *    `-white` cut via BrandMark, and navy reverses with the token.
+ */
+export function BuiltByGetBrian({ className }: { className?: string }) {
+  return (
+    <a
+      href="https://getbrian.xyz"
+      target="_blank"
+      rel="noopener"
+      className={cn(
+        "group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-border px-[0.8rem] py-[0.35rem] text-[0.85rem] text-ink-soft no-underline transition-colors duration-200 hover:border-navy hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        className,
+      )}
+    >
+      <BrandMark height={20} />
+      <span>
+        Built by{" "}
+        <b className="font-display font-semibold text-navy">GetBrian</b>
+      </span>
+    </a>
   );
 }

@@ -11,7 +11,7 @@ import {
 
 import { UploadWidget } from "@/components/upload-widget";
 import { Pricing } from "@/components/pricing";
-import { Logo } from "@/components/logo";
+import { BuiltByGetBrian, Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -359,15 +359,7 @@ function SiteFooter() {
             </Link>
           ))}
         </div>
-<a
-          href="https://getbrian.xyz"
-          target="_blank"
-          rel="noopener"
-          className="-my-2 inline-flex items-center gap-1 py-2.5 text-sm transition-colors hover:text-ink"
-        >
-          More from Brian
-          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
-        </a>
+<BuiltByGetBrian />
       </div>
     </footer>
   );
