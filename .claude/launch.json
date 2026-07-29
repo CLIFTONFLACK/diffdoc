@@ -7,6 +7,13 @@
       "runtimeArgs": ["run", "dev", "--", "-p", "3021"],
       "port": 3021,
       "autoPort": true
+    },
+    {
+      "name": "diffdoc-prod",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start"],
+      "port": 3022,
+      "autoPort": true
     }
   ]
 }

@@ -56,7 +56,7 @@ export default function TasksPage() {
           <ThemeToggle />
           <a
             href="/"
-            className="flex cursor-pointer items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+            className="flex cursor-pointer items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-gold-hover"
           >
             <Plus className="h-4 w-4" /> New comparison
           </a>
@@ -66,7 +66,7 @@ export default function TasksPage() {
       <main className="flex-1 px-6 py-10 sm:px-8">
         <div className="mx-auto max-w-6xl">
           <h1 className="mb-1 font-display text-3xl font-bold tracking-tight">
-            My Tasks<span className="text-primary">.</span>
+            My Tasks<span className="text-gold-deep">.</span>
           </h1>
           <p className="mb-8 text-sm text-ink-soft">
             Every comparison you&apos;ve run, in one place.
@@ -74,7 +74,7 @@ export default function TasksPage() {
 
           {tasks === null && !error && (
             <div className="flex items-center gap-2 text-sm text-ink-soft">
-              <Loader2 className="h-4 w-4 animate-spin text-primary" /> Loading tasks…
+              <Loader2 className="h-4 w-4 animate-spin text-navy-bright" aria-hidden /> Loading tasks…
             </div>
           )}
           {error && (
@@ -104,7 +104,7 @@ export default function TasksPage() {
                   <p className="mb-4 text-ink-soft">No comparisons yet.</p>
                   <a
                     href="/"
-                    className="inline-block cursor-pointer rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-primary/90"
+                    className="inline-block cursor-pointer rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-gold-hover"
                   >
                     Run your first comparison
                   </a>
@@ -115,10 +115,10 @@ export default function TasksPage() {
                     <a
                       key={task.id}
                       href={`/c/${task.id}`}
-                      className="group flex cursor-pointer flex-col gap-3 rounded-xl border border-line bg-card p-5 transition-all hover:border-primary/50 hover:shadow-sm"
+                      className="group flex cursor-pointer flex-col gap-3 rounded-xl border border-line bg-card p-5 transition-all hover:border-navy-bright/45 hover:shadow-sm"
                     >
                       <div className="min-w-0">
-                        <h2 className="truncate font-display font-bold text-ink transition-colors group-hover:text-leaf-deep">
+                        <h2 className="truncate font-display font-bold text-ink transition-colors group-hover:text-navy-bright">
                           {task.title ??
                             `${task.doc_a_name ?? "Primary"} vs ${task.doc_b_name ?? "Comparator"}`}
                         </h2>
@@ -130,7 +130,7 @@ export default function TasksPage() {
                       <div className="mt-auto flex items-center justify-between">
                         {task.status === "complete" &&
                         task.similarity_score != null ? (
-                          <span className="font-mono text-sm font-bold text-leaf-deep">
+                          <span className="font-mono text-sm font-bold text-navy-soft">
                             {task.similarity_score}%{" "}
                             <span className="text-[11px] font-normal text-ink-faint">
                               similar
@@ -189,7 +189,7 @@ function Stat({
         {label}
       </div>
       <div
-        className={`mt-1 font-mono text-2xl font-bold ${accent ? "text-leaf-deep" : "text-ink"}`}
+        className={`mt-1 font-mono text-2xl font-bold ${accent ? "text-navy-soft" : "text-ink"}`}
       >
         {value}
       </div>

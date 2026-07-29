@@ -75,10 +75,7 @@ export function UploadWidget({
 
   return (
     <div
-      className={cn(
-        "rounded-xl border bg-card p-5 text-card-foreground shadow-sm sm:p-6",
-        className,
-      )}
+      className={cn("glass rounded-xl p-5 text-card-foreground sm:p-6", className)}
     >
       {heading && (
         <div className="mb-5 flex items-center gap-2 border-b pb-4 text-sm font-medium text-ink-soft">
@@ -197,9 +194,9 @@ function FileSlot({
       className={cn(
         "rounded-lg border bg-background p-5 transition-colors",
         dragging
-          ? "border-primary ring-2 ring-leaf-ring"
+          ? "border-gold ring-2 ring-gold/40"
           : file
-            ? "border-primary/50"
+            ? "border-navy-bright/45"
             : "border-dashed border-input",
       )}
     >
@@ -212,7 +209,7 @@ function FileSlot({
         onChange={(e) => onSelect(e.target.files?.[0] ?? null)}
       />
       <div className="mb-3 flex items-baseline gap-2">
-        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-leaf-deep">
+        <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-navy-soft">
           {label}
         </span>
         <span className="text-xs text-ink-faint">{hint}</span>
@@ -244,7 +241,8 @@ function FileSlot({
           <Upload className="h-6 w-6" strokeWidth={1.25} />
           <span className="text-sm">
             Drop a file here or{" "}
-            <span className="font-medium text-primary underline decoration-2 underline-offset-2">
+            {/* Gold is 3.1:1 on white — never small text. Links take navy-bright. */}
+            <span className="font-medium text-navy-bright underline decoration-2 underline-offset-2">
               browse
             </span>
           </span>

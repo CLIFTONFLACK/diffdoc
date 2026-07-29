@@ -3,98 +3,159 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   DiffDoc design tokens — SLC-CRM "Swiss minimalism" system (teal + slate).
-   Ported from SLC-CDG-CRM/design-system/slc-crm/MASTER.md. Values are authored
-   as HSL channels so Tailwind's `hsl(var(--x) / <alpha-value>)` mappings support
-   opacity modifiers (e.g. bg-primary/90). Every color is theme-flipped, so the
-   whole app — including the legacy proofreader tokens — gets dark mode for free.
+   DiffDoc design tokens — the GetBrian brand system.
+
+   Source of truth: CliftonAi/docs/brand-book.html. Both brand anchors are
+   sampled from the supplied logo artwork (docs/GetBrian_Logo.png), not eyeballed.
+
+   Two rules from the book drive most of what follows:
+
+   1. Gold is a FILL and LOGOTYPE colour, never body text. Brian Gold is 3.1:1
+      on white — fine as a CTA fill with ink text on top (5.8:1), not fine for
+      copy. Small gold text takes Gold Deep; hover fills take Gold Hover; on
+      navy grounds everything reverses to Gold Light. Four values, four jobs.
+   2. Gold means "brand", never "a change". So the diff's functional colours
+      (insertion / deletion / tracked edit / comment) sit outside the brand ramp
+      entirely — otherwise a gold highlight in a document would read as an edit.
+
+   Values are authored as HSL channels so Tailwind's `hsl(var(--x) /
+   <alpha-value>)` mappings keep supporting opacity modifiers (bg-primary/90).
    ──────────────────────────────────────────────────────────────────────────── */
 :root {
-  --radius: 0.5rem;
+  --radius: 0.625rem;
 
-  /* shadcn / component tokens */
+  /* ---- brand ramp ------------------------------------------------------- */
+  /* Navy — masterbrand: the mark, headings, rules, gradients. */
+  --navy: 217 71% 14%; /* #0A1D3B — 15.9:1 on white */
+  --navy-mid: 217 64% 22%; /* #14305C — gradient ramp */
+  --navy-soft: 216 56% 32%; /* #24497F — body-safe navy, 9.0:1 */
+  --navy-bright: 215 50% 42%; /* #35629F — links, focus rings, 6.2:1 */
+
+  /* Gold — display/fill only, see rule 1 above. */
+  --gold: 39 58% 46%; /* #BA8B32 — CTA fills, wordmark */
+  --gold-hover: 39 60% 41%; /* #A87B2A — CTA hover, 4.7:1 vs ink */
+  --gold-deep: 39 62% 33%; /* #8A6520 — the only gold text on white, 5.3:1 */
+  --gold-light: 43 70% 59%; /* #E0B84F — gold on navy grounds only */
+
+  /* ---- shadcn / component tokens ---------------------------------------- */
   --background: 0 0% 100%;
-  --foreground: 222 47% 11%;
+  --foreground: 232 37% 12%;
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
+  --card-foreground: 232 37% 12%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --primary: 175 77% 26%; /* trust teal — #0F766E */
-  --primary-foreground: 0 0% 100%;
-  --secondary: 210 40% 96%;
-  --secondary-foreground: 222 47% 11%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 19% 35%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222 47% 11%;
-  --destructive: 0 72% 51%;
+  --popover-foreground: 232 37% 12%;
+  /* The CTA: gold fill, ink text. Never white text on gold — 2.9:1. */
+  --primary: 39 58% 46%;
+  --primary-foreground: 232 37% 12%;
+  --secondary: 220 23% 97%;
+  --secondary-foreground: 217 71% 14%;
+  --muted: 220 23% 97%;
+  --muted-foreground: 230 18% 33%;
+  --accent: 220 23% 97%;
+  --accent-foreground: 217 71% 14%;
+  --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
-  --success: 163 94% 24%;
-  --warning: 26 90% 37%;
-  --info: 201 96% 32%; /* professional blue — links / info */
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --ring: 175 77% 26%;
+  --success: 152 83% 26%;
+  --warning: 22 92% 37%;
+  --info: 215 50% 42%; /* navy-bright — links */
+  --border: 218 17% 91%;
+  --input: 222 19% 86%;
+  --ring: 215 50% 42%;
 
-  /* legacy proofreader tokens, remapped onto the CRM palette */
+  /* ---- paper / ink ------------------------------------------------------ */
   --paper: 0 0% 100%;
-  --paper-deep: 210 40% 98%;
-  --line: 214 32% 91%;
-  --ink: 222 47% 11%;
-  --ink-soft: 215 19% 35%;
-  --ink-faint: 215 16% 47%;
-  --leaf: 175 77% 26%; /* accent → teal */
-  --leaf-deep: 176 69% 22%;
-  --leaf-wash: 152 81% 96%;
-  --leaf-ring: 171 77% 64%;
-  --flag: 0 72% 51%; /* risk → red */
-  --flag-wash: 0 86% 97%;
-  --pen: 262 83% 58%; /* edits → violet */
-  --pen-wash: 251 100% 97%;
-  --note: 26 90% 37%; /* comments → amber */
-  --note-wash: 48 100% 96%;
+  --paper-deep: 220 23% 97%;
+  --line: 218 17% 91%;
+  --ink: 232 37% 12%; /* #14172B */
+  --ink-soft: 230 18% 33%; /* #454A64 */
+  /* Darker than the Brian site's #6B7089: at 48% it measures 4.49:1 against
+     --paper-deep, i.e. it fails AA by a hundredth on the panelled sections
+     where most of the small print actually sits. 46% clears 4.8:1 on both
+     grounds. */
+  --ink-faint: 230 12% 46%;
+
+  /* ---- functional diff colours (deliberately outside the brand ramp) ----- */
+  --leaf: 152 83% 26%; /* insertion — green */
+  --leaf-deep: 152 84% 20%;
+  --leaf-wash: 148 48% 94%;
+  --leaf-ring: 149 45% 57%;
+  --flag: 4 76% 40%; /* deletion / risk — red */
+  --flag-wash: 7 89% 96%;
+  --pen: 277 70% 35%; /* tracked edit — violet, DiffDoc's own accent */
+  --pen-wash: 275 68% 95%;
+  /* Comment — teal. Deliberately not navy: navy is the app's chrome, and a
+     comment marker that matches the chrome stops reading as an annotation. */
+  --note: 193 82% 31%;
+  --note-wash: 193 61% 94%;
+
+  /* ---- glass / elevation ------------------------------------------------ */
+  --glass-bg: 0 0% 100%;
+  --glass-alpha: 0.72;
+  --shadow-card: 0 4px 28px rgba(20, 23, 43, 0.06);
+  --shadow-lift: 0 16px 40px rgba(20, 23, 43, 0.1);
 }
 
+/* Dark theme. Not invented — these are the brand book's own dark values
+   (--paper #14172B, --paper-panel #1B1F3D, --ink #F3EFE4, --blue #97A7D6,
+   --spark #E0B83F, --spark-ink #2A2103), extended to the component tokens. */
 .dark {
-  --background: 222 47% 8%;
-  --foreground: 214 32% 91%;
-  --card: 222 47% 11%;
-  --card-foreground: 214 32% 91%;
-  --popover: 222 47% 11%;
-  --popover-foreground: 214 32% 91%;
-  --primary: 173 80% 40%; /* teal-500 */
-  --primary-foreground: 179 84% 10%;
-  --secondary: 217 33% 17%;
-  --secondary-foreground: 214 32% 91%;
-  --muted: 217 33% 17%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 217 33% 17%;
-  --accent-foreground: 214 32% 91%;
-  --destructive: 0 91% 71%;
-  --destructive-foreground: 0 75% 15%;
-  --success: 156 72% 67%;
-  --warning: 46 97% 65%;
-  --info: 199 95% 74%;
-  --border: 217 33% 17%;
-  --input: 215 25% 27%;
-  --ring: 172 66% 50%;
+  --navy: 228 100% 90%; /* #CDD7FF — "navy" reverses to a light blue */
+  --navy-mid: 225 43% 72%;
+  --navy-soft: 225 43% 72%; /* #97A7D6 */
+  --navy-bright: 225 43% 72%;
 
-  --paper: 222 47% 8%;
-  --paper-deep: 222 47% 11%;
-  --line: 217 33% 17%;
-  --ink: 214 32% 91%;
-  --ink-soft: 215 20% 65%;
-  --ink-faint: 215 19% 55%;
-  --leaf: 173 80% 40%;
-  --leaf-deep: 172 66% 50%;
-  --leaf-wash: 179 84% 10%;
-  --leaf-ring: 172 66% 50%;
-  --flag: 0 91% 71%;
-  --flag-wash: 0 75% 15%;
-  --pen: 255 92% 76%;
-  --pen-wash: 260 55% 18%;
-  --note: 46 97% 65%;
-  --note-wash: 30 60% 14%;
+  --gold: 45 72% 56%; /* #E0B83F — Gold Light, the only gold on navy grounds */
+  --gold-hover: 43 70% 64%;
+  --gold-deep: 45 72% 56%;
+  --gold-light: 43 70% 66%;
+
+  --background: 232 37% 12%;
+  --foreground: 44 38% 92%;
+  --card: 233 39% 17%;
+  --card-foreground: 44 38% 92%;
+  --popover: 233 39% 17%;
+  --popover-foreground: 44 38% 92%;
+  --primary: 45 72% 56%;
+  --primary-foreground: 46 87% 9%; /* #2A2103 — the book's --spark-ink */
+  --secondary: 233 31% 22%;
+  --secondary-foreground: 44 38% 92%;
+  --muted: 233 31% 22%;
+  --muted-foreground: 229 19% 72%;
+  --accent: 233 31% 22%;
+  --accent-foreground: 44 38% 92%;
+  --destructive: 3 85% 74%;
+  --destructive-foreground: 3 49% 12%;
+  --success: 150 50% 50%;
+  --warning: 33 82% 66%;
+  --info: 225 43% 72%;
+  --border: 233 31% 26%;
+  --input: 233 30% 32%;
+  --ring: 225 43% 72%;
+
+  --paper: 232 37% 12%;
+  --paper-deep: 233 39% 17%;
+  --line: 233 31% 26%;
+  --ink: 44 38% 92%; /* #F3EFE4 */
+  --ink-soft: 229 19% 72%; /* #A9AEC4 */
+  /* 64%, not 61%: --muted is the lightest dark ground the faint text lands on,
+     and at 61% it measures 4.38:1 there. */
+  --ink-faint: 231 16% 64%;
+
+  --leaf: 150 50% 50%;
+  --leaf-deep: 150 50% 62%;
+  --leaf-wash: 154 57% 11%;
+  --leaf-ring: 150 50% 50%;
+  --flag: 3 85% 74%;
+  --flag-wash: 3 49% 15%;
+  --pen: 274 77% 74%;
+  --pen-wash: 275 42% 15%;
+  --note: 191 69% 59%;
+  --note-wash: 192 62% 14%;
+
+  --glass-bg: 233 39% 17%;
+  --glass-alpha: 0.66;
+  --shadow-card: 0 4px 28px rgba(0, 0, 0, 0.35);
+  --shadow-lift: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 @layer base {
@@ -106,9 +167,19 @@
     height: 100%;
     -webkit-font-smoothing: antialiased;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-ink font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  /* Space Grotesk is a touch loose at display sizes; the brand book sets
+     headings at -0.01em. */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.01em;
   }
   /* UI base is comfortable, but keep inputs >=16px on mobile to avoid iOS zoom */
   @media (max-width: 640px) {
@@ -117,6 +188,158 @@
     select {
       font-size: 16px;
     }
+  }
+}
+
+@layer components {
+  /* ---- brand surfaces --------------------------------------------------- */
+
+  /* The navy gradient — full-bleed bands, the final CTA, reversed panels. */
+  .brand-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--navy)) 0%,
+      hsl(var(--navy-mid)) 50%,
+      hsl(var(--navy-bright)) 100%
+    );
+  }
+  .dark .brand-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(232 37% 10%) 0%,
+      hsl(233 39% 17%) 50%,
+      hsl(233 34% 25%) 100%
+    );
+  }
+
+  .brand-gradient-text {
+    background: linear-gradient(
+      100deg,
+      hsl(var(--navy-mid)) 0%,
+      hsl(var(--navy-soft)) 70%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Frosted panels. Opacity stays high enough that body text keeps its
+     contrast in light mode — a bg-white/10 "glass" card is just an invisible
+     card. */
+  .glass {
+    background: hsl(var(--glass-bg) / var(--glass-alpha));
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-card);
+  }
+
+  .glass-nav {
+    background: hsl(var(--glass-bg) / 0.8);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+
+  .glass-hover {
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      border-color 250ms ease;
+  }
+  .glass-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    border-color: hsl(var(--navy-bright) / 0.35);
+  }
+
+  /* Soft blurred blobs behind glass — glassmorphism on a plain white ground
+     with nothing to refract just reads as a bordered box. */
+  .blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(60px);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .blob-navy {
+    background: radial-gradient(
+      circle at 30% 30%,
+      hsl(var(--navy-bright) / 0.5),
+      transparent 70%
+    );
+  }
+  .blob-gold {
+    background: radial-gradient(
+      circle at 60% 40%,
+      hsl(var(--gold) / 0.34),
+      transparent 70%
+    );
+  }
+  .blob-deep {
+    background: radial-gradient(
+      circle at 60% 40%,
+      hsl(var(--navy) / 0.38),
+      transparent 70%
+    );
+  }
+  .dark .blob {
+    opacity: 0.36;
+  }
+
+  /* Faint dot grid — depth behind hero artwork without competing with it. */
+  .dot-grid {
+    background-image: radial-gradient(hsl(var(--ink) / 0.09) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+}
+
+/* Branded keyboard-focus ring for clickable cards — the default UA outline is
+   invisible against glass surfaces. */
+.card-focus:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px hsl(var(--background)),
+    0 0 0 4px hsl(var(--ring));
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(2%, -3%) scale(1.05);
+  }
+}
+.animate-float {
+  animation: float 16s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: float 22s ease-in-out infinite reverse;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 700ms ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

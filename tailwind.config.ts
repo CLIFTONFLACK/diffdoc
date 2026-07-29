@@ -1,11 +1,15 @@
 import type { Config } from "tailwindcss";
 
 /**
- * SLC-CRM "Swiss minimalism" theme — trust-teal + slate, Geist type, light/dark.
- * Colors are wired to CSS variables (see app/globals.css) as `hsl(var(--x) /
- * <alpha-value>)` so opacity modifiers work (bg-primary/90, border-flag/30, …).
- * Legacy proofreader keys (paper/ink/line/leaf/flag/pen/note) are retained so
- * existing markup restyles in place and inherits dark mode.
+ * The GetBrian brand system — navy + gold on white, Space Grotesk headings over
+ * DM Sans body. Colors are wired to CSS variables (see app/globals.css) as
+ * `hsl(var(--x) / <alpha-value>)` so opacity modifiers work (bg-primary/90,
+ * border-flag/30, …).
+ *
+ * Two scales, deliberately separate:
+ *   • `navy` / `gold` — brand. Structure, headings, CTAs, the mark.
+ *   • `leaf` / `flag` / `pen` / `note` — functional diff colours. Kept out of
+ *     the brand ramp so a gold accent never reads as "this text changed".
  */
 const hsl = (v: string) => `hsl(var(${v}) / <alpha-value>)`;
 
@@ -15,6 +19,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // brand ramp — see the gold-discipline note in app/globals.css
+        navy: {
+          DEFAULT: hsl("--navy"),
+          mid: hsl("--navy-mid"),
+          soft: hsl("--navy-soft"),
+          bright: hsl("--navy-bright"),
+        },
+        gold: {
+          DEFAULT: hsl("--gold"),
+          hover: hsl("--gold-hover"),
+          deep: hsl("--gold-deep"),
+          light: hsl("--gold-light"),
+        },
+
         // shadcn / component tokens
         background: hsl("--background"),
         foreground: hsl("--foreground"),
@@ -53,7 +71,7 @@ const config: Config = {
         input: hsl("--input"),
         ring: hsl("--ring"),
 
-        // legacy proofreader tokens (remapped to CRM palette in globals.css)
+        // paper/ink + the functional diff scales
         paper: {
           DEFAULT: hsl("--paper"),
           deep: hsl("--paper-deep"),
@@ -84,11 +102,28 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "Geist", "-apple-system", "sans-serif"],
+        // Brand book ch. 03: Space Grotesk headings, DM Sans body. Mono is a
+        // functional need (diff gutters, hashes, file paths), not brand type —
+        // Geist Mono stays.
+        sans: ["var(--font-dm-sans)", "DM Sans", "-apple-system", "sans-serif"],
+        display: [
+          "var(--font-space-grotesk)",
+          "Space Grotesk",
+          "var(--font-dm-sans)",
+          "sans-serif",
+        ],
         mono: ["var(--font-geist-mono)", "Geist Mono", "ui-monospace", "monospace"],
-        display: ["var(--font-space-grotesk)", "Space Grotesk", "Geist", "sans-serif"],
-        // Old serif usages neutralize to the UI sans (Swiss = no display serifs).
-        serif: ["var(--font-geist-sans)", "Geist", "-apple-system", "sans-serif"],
+        // Old serif usages neutralize to the body face.
+        serif: ["var(--font-dm-sans)", "DM Sans", "-apple-system", "sans-serif"],
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        card: "var(--shadow-card)",
+        lift: "var(--shadow-lift)",
       },
     },
   },

@@ -8,12 +8,14 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-transparent bg-primary/10 text-leaf-deep",
+        // Gold as a wash with Gold Deep text — the brand-safe way to tint a
+        // chip, since gold at text sizes only clears contrast at Gold Deep.
+        default: "border-transparent bg-gold/12 text-gold-deep",
         secondary: "border-transparent bg-muted text-ink-soft",
         outline: "border-border text-ink-soft",
-        success: "border-transparent bg-leaf-wash text-success",
-        warning: "border-transparent bg-note-wash text-note",
-        info: "border-transparent bg-pen-wash text-info",
+        success: "border-transparent bg-leaf-wash text-leaf-deep",
+        warning: "border-transparent bg-flag-wash/60 text-warning",
+        info: "border-transparent bg-note-wash text-note",
       },
     },
     defaultVariants: { variant: "default" },

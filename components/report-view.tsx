@@ -74,7 +74,7 @@ export function ReportView({
           </div>
           <button
             onClick={() => (onDownload ? onDownload() : window.print())}
-            className="print-hide px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-primary/90"
+            className="print-hide px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-gold-hover"
           >
             <Download className="w-4 h-4" /> Download PDF
           </button>
@@ -126,7 +126,7 @@ export function ReportView({
             .map(([action, count]) => (
               <div key={action} className="flex items-center justify-between px-4 py-2.5 text-sm">
                 <span className="text-ink font-serif">{ACTION_LABELS[action]}</span>
-                <span className="font-mono text-leaf-deep font-bold">{count}</span>
+                <span className="font-mono text-navy-soft font-bold">{count}</span>
               </div>
             ))}
           {entries.length === 0 && (
@@ -239,8 +239,8 @@ export function ReportView({
           </>
         )}
 
-        <div className="p-4 bg-leaf-wash border border-leaf/30 rounded-xl flex items-start gap-3 mb-8">
-          <Sparkles className="w-5 h-5 text-leaf-deep mt-0.5 flex-shrink-0" />
+        <div className="p-4 bg-navy/6 border border-navy/20 rounded-xl flex items-start gap-3 mb-8">
+          <Sparkles className="w-5 h-5 text-navy-soft mt-0.5 flex-shrink-0" aria-hidden />
           <div className="text-sm font-serif text-ink-soft">
             <span className="font-semibold not-italic text-ink">Methodology.</span> This report is
             based on a literal character-level comparison (diff-match-patch) of the extracted

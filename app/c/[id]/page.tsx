@@ -69,34 +69,41 @@ export default function ComparisonPage({ params }: { params: { id: string } }) {
   if (status === "complete" && data) return <ComparisonView data={data} />;
 
   return (
-    <div className="min-h-screen bg-paper flex items-center justify-center font-sans">
-      <div className="text-center max-w-sm px-6">
+    <div className="relative isolate min-h-screen overflow-hidden bg-paper flex items-center justify-center font-sans">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="blob blob-navy animate-float absolute left-1/2 top-1/3 h-[420px] w-[420px] -translate-x-1/2" />
+      </div>
+      <div className="text-center max-w-sm px-6" role="status" aria-live="polite">
         {status === "failed" || status === "missing" ? (
           <>
-            <AlertTriangle className="w-8 h-8 text-flag mx-auto mb-3" />
+            <AlertTriangle className="w-8 h-8 text-flag mx-auto mb-3" aria-hidden />
             <h1 className="font-display font-bold text-lg text-ink mb-2">
               {status === "missing" ? "Comparison not found" : "Processing failed"}
             </h1>
-            <p className="text-sm font-serif text-ink-soft mb-5">
+            <p className="text-sm text-ink-soft mb-5">
               {status === "missing"
-                ? "This comparison doesn't exist or the link is wrong."
+                ? "This comparison doesn't exist, or the link is wrong."
                 : "Something went wrong while parsing or diffing the documents."}
             </p>
             <a
               href="/"
-              className="inline-block px-5 py-2 text-sm font-medium bg-ink text-paper rounded-lg hover:bg-ink/85"
+              className="inline-block px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-gold-hover transition-colors"
             >
               Start a new comparison
             </a>
           </>
         ) : (
           <>
-            <Loader2 className="w-8 h-8 text-leaf mx-auto mb-3 animate-spin" />
+            <Loader2
+              className="w-8 h-8 text-navy-bright mx-auto mb-3 animate-spin"
+              aria-hidden
+            />
             <h1 className="font-display font-bold text-lg text-ink mb-1">
               {status === "processing" ? "Comparing documents…" : "Preparing comparison…"}
             </h1>
-            <p className="text-sm font-serif italic text-ink-soft">
-              Reading both files and marking up the differences. Usually takes a few seconds.
+            <p className="text-sm text-ink-soft">
+              Reading both files and marking up the differences. Usually takes a few
+              seconds.
             </p>
           </>
         )}

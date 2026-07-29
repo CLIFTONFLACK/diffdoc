@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Space_Grotesk } from "next/font/google";
+import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-// Geist for UI + tabular data (matches SLC-CRM); Space Grotesk for marketing
-// headings only. No display serifs — Swiss minimalism.
+// Brand book ch. 03: Space Grotesk for headings, DM Sans for body. Geist Mono
+// stays for the diff gutters, similarity figures and file paths — that's a
+// functional need, not brand type.
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
@@ -13,10 +13,31 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-dm-sans",
+  display: "swap",
+});
+
+const siteUrl = "https://diffdoc.cliftonai.co";
+
 export const metadata: Metadata = {
-  title: "DiffDoc — See exactly what changed",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "DiffDoc — see exactly what changed",
+    template: "%s · DiffDoc",
+  },
   description:
-    "Upload two versions of a document and DiffDoc reads both, scores their similarity, and marks up exactly what changed — line by line.",
+    "Drop in two versions of a document. DiffDoc reads both, scores how far they've drifted, and marks up every insertion, deletion and edit. Built by Brian.",
+  openGraph: {
+    title: "DiffDoc — see exactly what changed",
+    description:
+      "One clause changed. Did anyone catch it? DiffDoc marks up exactly what moved between two versions of a document, then lets you comment, edit and export it.",
+    url: siteUrl,
+    siteName: "DiffDoc",
+    type: "website",
+  },
 };
 
 // Apply the saved/system theme before paint to avoid a flash of the wrong theme.
@@ -31,7 +52,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${GeistSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-import { Logo } from "@/components/logo";
+import { BuiltByBrian, Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { GoogleButton } from "@/components/signup-prompt";
 import { Button } from "@/components/ui/button";
@@ -19,32 +19,37 @@ export function AuthPanel({ mode }: { mode: "sign-in" | "sign-up" }) {
   const [note, setNote] = useState<string | null>(null);
 
   return (
-    <div className="flex min-h-screen flex-col bg-paper-deep">
+    <div className="relative isolate flex min-h-screen flex-col overflow-hidden bg-paper-deep">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="blob blob-navy animate-float absolute -left-20 -top-24 h-[380px] w-[380px]" />
+        <div className="blob blob-gold animate-float-slow absolute -right-16 bottom-0 h-[320px] w-[320px]" />
+      </div>
+
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-sm text-ink-soft transition-colors hover:text-ink"
         >
-          <ArrowLeft className="h-4 w-4" /> Back
+          <ArrowLeft className="h-4 w-4" aria-hidden /> Back
         </Link>
         <ThemeToggle />
       </div>
 
       <div className="flex flex-1 items-center justify-center px-4 pb-16">
         <div className="w-full max-w-sm">
-          <div className="mb-6 text-center">
+          <div className="mb-6 flex flex-col items-center text-center">
             <Logo size="sm" />
-            <h1 className="mt-4 font-display text-2xl font-semibold tracking-tight">
+            <h1 className="mt-4 font-display text-2xl font-bold tracking-tight">
               {isSignUp ? "Create your free account" : "Welcome back"}
             </h1>
             <p className="mt-1.5 text-sm text-ink-soft">
               {isSignUp
-                ? "5 comparisons every month, free. No card required."
+                ? "Five comparisons a month, free. No card."
                 : "Sign in to your DiffDoc workspace."}
             </p>
           </div>
 
-          <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <div className="glass rounded-xl p-6">
             <GoogleButton
               label={isSignUp ? "Sign up with Google" : "Continue with Google"}
               href="#"
@@ -107,19 +112,29 @@ export function AuthPanel({ mode }: { mode: "sign-in" | "sign-up" }) {
             {isSignUp ? (
               <>
                 Already have an account?{" "}
-                <Link href="/login" className="font-medium text-info hover:underline">
+                <Link
+                  href="/login"
+                  className="font-medium text-navy-bright hover:underline"
+                >
                   Sign in
                 </Link>
               </>
             ) : (
               <>
                 New to DiffDoc?{" "}
-                <Link href="/signup" className="font-medium text-info hover:underline">
+                <Link
+                  href="/signup"
+                  className="font-medium text-navy-bright hover:underline"
+                >
                   Create a free account
                 </Link>
               </>
             )}
           </p>
+
+          <div className="mt-8 flex justify-center">
+            <BuiltByBrian />
+          </div>
         </div>
       </div>
     </div>

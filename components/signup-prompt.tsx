@@ -83,19 +83,19 @@ export function SignupPrompt({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-navy/60 p-4 backdrop-blur-sm dark:bg-black/70"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="signup-prompt-title"
     >
       <div
-        className="w-full max-w-sm rounded-lg border bg-card p-6 text-card-foreground shadow-xl"
+        className="w-full max-w-sm rounded-xl border bg-card p-6 text-card-foreground shadow-lift"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-primary">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold-deep">
               Free account
             </p>
             <h2
@@ -122,7 +122,7 @@ export function SignupPrompt({
         <ul className="mt-4 space-y-2">
           {PERKS.map((p) => (
             <li key={p} className="flex items-start gap-2 text-sm text-ink-soft">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+              <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-gold-deep" />
               {p}
             </li>
           ))}
