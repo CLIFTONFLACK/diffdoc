@@ -29,7 +29,20 @@ export async function GET(
     )
     .eq("id", id)
     .single();
-  if (error || !comparison) {
+  // Distinguish "no such row" from "couldn't reach the database". Collapsing
+  // both into a 404 hid a total Supabase outage behind a tidy "Comparison not
+  // found" screen — the app looked like it was working correctly on a bad id
+  // when in fact nothing could reach the DB at all. PostgREST reports an empty
+  // .single() as PGRST116; anything else is a real fault and must surface as
+  // one, so the polling UI shows "Processing failed" rather than a dead end.
+  if (error && error.code !== "PGRST116") {
+    console.error(`[comparisons/${id}] database read failed:`, error);
+    return NextResponse.json(
+      { error: `Database unavailable: ${error.message}` },
+      { status: 503 },
+    );
+  }
+  if (!comparison) {
     return NextResponse.json({ error: "Comparison not found." }, { status: 404 });
   }
 
