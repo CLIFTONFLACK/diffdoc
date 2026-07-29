@@ -11,7 +11,7 @@ import {
 
 import { UploadWidget } from "@/components/upload-widget";
 import { Pricing } from "@/components/pricing";
-import { BuiltByBrian, Logo } from "@/components/logo";
+import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -39,17 +39,17 @@ const SIBLINGS = [
   {
     name: "CRM",
     tag: "Leisure & licensed property",
-    href: "https://crm.cliftonai.co",
+    href: "https://crm.getbrian.xyz",
   },
   {
     name: "ContentFlow",
     tag: "Content operations for WordPress",
-    href: "https://flow.cliftonai.co",
+    href: "https://flow.getbrian.xyz",
   },
   {
     name: "DealMaker",
     tag: "Deal pipeline for small business",
-    href: "https://dealmaker.cliftonai.co",
+    href: "https://dealmaker.getbrian.xyz",
   },
 ];
 
@@ -273,7 +273,6 @@ function SiteHeader() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-6 py-3">
         <Logo />
         <nav className="flex items-center gap-1 sm:gap-2">
-          <BuiltByBrian className="mr-2 hidden py-2.5 sm:inline-flex" />
           <a
             href="#pricing"
             className="hidden px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink sm:block"
@@ -360,7 +359,15 @@ function SiteFooter() {
             </Link>
           ))}
         </div>
-        <BuiltByBrian className="-my-2 py-2.5" />
+<a
+          href="https://getbrian.xyz"
+          target="_blank"
+          rel="noopener"
+          className="-my-2 inline-flex items-center gap-1 py-2.5 text-sm transition-colors hover:text-ink"
+        >
+          More from Brian
+          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+        </a>
       </div>
     </footer>
   );
@@ -432,7 +439,7 @@ function ShotFrame({ path, children }: { path: string; children: React.ReactNode
  */
 function DiffPreview() {
   return (
-    <ShotFrame path="diffdoc.cliftonai.co/c/8f2a…">
+    <ShotFrame path="diffdoc.getbrian.xyz/c/8f2a…">
       <div className="mb-3 flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2 text-xs font-medium text-ink-soft">
           <GitCompare className="h-4 w-4 shrink-0 text-navy-bright" aria-hidden />
@@ -470,7 +477,7 @@ function DiffPreview() {
 /** Synthetic report/export preview. */
 function ReportPreview() {
   return (
-    <ShotFrame path="diffdoc.cliftonai.co/c/8f2a…/report">
+    <ShotFrame path="diffdoc.getbrian.xyz/c/8f2a…/report">
       <div className="grid grid-cols-3 gap-3 text-center">
         {[
           { n: "27", l: "Changes" },

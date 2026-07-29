@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-import { BuiltByBrian, Logo } from "@/components/logo";
+import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { GoogleButton } from "@/components/signup-prompt";
 import { Button } from "@/components/ui/button";
@@ -132,9 +132,6 @@ export function AuthPanel({ mode }: { mode: "sign-in" | "sign-up" }) {
             )}
           </p>
 
-          <div className="mt-8 flex justify-center">
-            <BuiltByBrian />
-          </div>
         </div>
       </div>
     </div>

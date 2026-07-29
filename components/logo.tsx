@@ -3,20 +3,30 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /**
- * The DiffDoc lockup: the GetBrian mark + the product word.
+ * The shared GetBrian product lockup: mark + "GetBrian" + hairline + product
+ * word. Matches flow.getbrian.xyz, which is the reference implementation:
  *
- * Three brand-book rules are enforced here rather than left to call sites:
+ *   .lockup      inline-flex, align-items center, gap .6rem
+ *   .lockup-mark height 40px, width auto
+ *   .wordmark    display face, 600, 1.4rem, -0.02em
+ *   .wm-get      Brian Navy      .wm-brian  Gold Deep
+ *   .product-tag same type, navy, 1px left keyline, .8rem padding + margin,
+ *                hidden below 520px
  *
+ * Two brand-book rules are enforced here rather than left to call sites:
+ *
+ *  • **"Brian" is Gold Deep, never Brian Gold.** At lockup sizes Brian Gold is
+ *    3.1:1 on white and fails AA; Gold Deep is 5.3:1. (crm.getbrian.xyz sets
+ *    this one with the full gold and is failing contrast because of it.)
  *  • **Never set the display cut below 40px.** The mark's B has no left stem —
  *    the gold traces running into its open counter are what close the letter,
- *    and below ~40px the display cut silts into mud and starts reading as a 3.
- *    `size="sm"` therefore swaps in `brian-mark-compact.svg`, which is the same
- *    geometry with thickened traces and filled ring interiors. An optical-size
- *    cut, not a different logo.
- *  • **Reversed artwork on dark grounds.** The on-white gold ramp goes muddy on
- *    navy, so dark mode swaps to the `-white` cuts rather than filtering.
- *  • **Clear space equal to the height of the gold swoosh on every side** — the
- *    `gap` and the wrapper's leading account for it.
+ *    and below ~40px the display cut silts into mud and reads as a 3. `size="sm"`
+ *    therefore swaps in `brian-mark-compact.svg`, the same geometry with
+ *    thickened traces and filled ring interiors. An optical-size cut, not a
+ *    different logo.
+ *
+ * Dark grounds get the reversed artwork: the on-white gold ramp goes muddy on
+ * navy.
  *
  * The artwork is generated from `docs/GetBrian_Logo.png` by `npm run brand` in
  * the Brian site repo. Don't hand-edit the SVGs here; re-copy them.
@@ -29,48 +39,57 @@ export function Logo({
   className?: string;
 }) {
   const lg = size === "lg";
-  // Display cut at 44px+ (lg), compact cut at 28px (sm).
-  const cut = lg ? "brian-mark" : "brian-mark-compact";
 
   return (
     <Link
       href="/"
-      aria-label="DiffDoc, built by Brian — home"
+      aria-label="GetBrian DiffDoc — home"
       className={cn(
-        "group inline-flex items-center",
-        lg ? "gap-3" : "gap-2",
+        "inline-flex min-w-0 items-center rounded-md no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        lg ? "gap-2.5" : "gap-2",
         className,
       )}
     >
-      <BrandMark cut={cut} lg={lg} />
+      <BrandMark lg={lg} />
       <span
         className={cn(
-          "font-display font-semibold leading-none tracking-tight text-ink",
-          lg ? "text-2xl sm:text-[28px]" : "text-base",
+          "flex min-w-0 items-center font-display font-semibold leading-none tracking-[-0.02em]",
+          lg ? "text-[1.4rem]" : "text-lg",
         )}
       >
-        DiffDoc
+        <span className="text-navy">Get</span>
+        <span className="text-gold-deep">Brian</span>
+        {/* Below 520px the product word drops and the wordmark carries the
+            lockup on its own — same rule as the sibling sites. The keyline is
+            a border on the product word rather than its own element, so it
+            can't be left dangling after "GetBrian" when the word hides. */}
+        <span
+          className={cn(
+            "hidden truncate self-center border-l border-border text-navy min-[520px]:inline-block",
+            lg ? "ml-[0.8rem] pl-[0.8rem]" : "ml-2.5 pl-2.5",
+          )}
+        >
+          DiffDoc
+        </span>
       </span>
     </Link>
   );
 }
 
 /**
- * The mark on its own — for tight chrome (mobile headers, the auth card) where
- * the product word is already stated nearby.
+ * The mark on its own — for tight chrome where the product word is already
+ * stated nearby. Dimensions are fixed so the header doesn't reflow on load:
+ * the viewBox is 654.5 × 518, so width tracks height at ~1.264:1.
  */
 export function BrandMark({
-  cut = "brian-mark-compact",
   lg = false,
   className,
 }: {
-  cut?: string;
   lg?: boolean;
   className?: string;
 }) {
-  // viewBox is 654.5 × 518, so width tracks height at ~1.264:1. Fixing both
-  // dimensions reserves the space and stops the header reflowing on load.
-  const h = lg ? 44 : 28;
+  const cut = lg ? "brian-mark" : "brian-mark-compact";
+  const h = lg ? 40 : 28;
   const w = Math.round(h * 1.2635);
 
   return (
@@ -82,6 +101,7 @@ export function BrandMark({
       <img
         src={`/brand/${cut}.svg`}
         alt=""
+        aria-hidden="true"
         width={w}
         height={h}
         className="block h-full w-full dark:hidden"
@@ -90,44 +110,11 @@ export function BrandMark({
       <img
         src={`/brand/${cut}-white.svg`}
         alt=""
+        aria-hidden="true"
         width={w}
         height={h}
         className="hidden h-full w-full dark:block"
       />
     </span>
-  );
-}
-
-/**
- * The "Built by Brian" credit. The mark alone doesn't say "Brian" — that's the
- * point of the identity — so attribution is carried verbally, in the voice, and
- * links out to getbrian.xyz.
- */
-export function BuiltByBrian({ className }: { className?: string }) {
-  return (
-    <a
-      href="https://getbrian.xyz"
-      target="_blank"
-      rel="noopener"
-      className={cn(
-        "inline-flex items-center gap-1.5 text-xs font-medium text-ink-faint transition-colors hover:text-gold-deep",
-        className,
-      )}
-    >
-      Built by
-      <span className="font-display font-semibold text-ink-soft">Brian</span>
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-        className="h-3 w-3"
-      >
-        <path d="M7 17 17 7M9 7h8v8" />
-      </svg>
-    </a>
   );
 }

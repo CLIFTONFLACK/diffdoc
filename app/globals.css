@@ -20,54 +20,59 @@
 
    Values are authored as HSL channels so Tailwind's `hsl(var(--x) /
    <alpha-value>)` mappings keep supporting opacity modifiers (bg-primary/90).
+
+   The brand anchors carry one decimal place deliberately. Rounded to whole
+   percentages they land 1-2 RGB units off the hexes sampled from the logo, and
+   the wordmark is live text sitting directly against an SVG that uses the
+   literal hex — so "Get" in --navy has to be exactly #0A1D3B, not nearly.
    ──────────────────────────────────────────────────────────────────────────── */
 :root {
   --radius: 0.625rem;
 
   /* ---- brand ramp ------------------------------------------------------- */
   /* Navy — masterbrand: the mark, headings, rules, gradients. */
-  --navy: 217 71% 14%; /* #0A1D3B — 15.9:1 on white */
-  --navy-mid: 217 64% 22%; /* #14305C — gradient ramp */
-  --navy-soft: 216 56% 32%; /* #24497F — body-safe navy, 9.0:1 */
-  --navy-bright: 215 50% 42%; /* #35629F — links, focus rings, 6.2:1 */
+  --navy: 216.7 71% 13.5%; /* #0A1D3B — 15.9:1 on white */
+  --navy-mid: 216.7 64.3% 22%; /* #14305C — gradient ramp */
+  --navy-soft: 215.6 55.8% 32%; /* #24497F — body-safe navy, 9.0:1 */
+  --navy-bright: 214.5 50% 41.6%; /* #35629F — links, focus rings, 6.2:1 */
 
   /* Gold — display/fill only, see rule 1 above. */
-  --gold: 39 58% 46%; /* #BA8B32 — CTA fills, wordmark */
-  --gold-hover: 39 60% 41%; /* #A87B2A — CTA hover, 4.7:1 vs ink */
-  --gold-deep: 39 62% 33%; /* #8A6520 — the only gold text on white, 5.3:1 */
-  --gold-light: 43 70% 59%; /* #E0B84F — gold on navy grounds only */
+  --gold: 39.3 57.6% 46.3%; /* #BA8B32 — CTA fills, wordmark */
+  --gold-hover: 38.6 60% 41.2%; /* #A87B2A — CTA hover, 4.7:1 vs ink */
+  --gold-deep: 39.1 62.4% 33.3%; /* #8A6520 — the only gold text on white, 5.3:1 */
+  --gold-light: 43.4 70% 59.4%; /* #E0B84F — gold on navy grounds only */
 
   /* ---- shadcn / component tokens ---------------------------------------- */
   --background: 0 0% 100%;
-  --foreground: 232 37% 12%;
+  --foreground: 232.2 36.5% 12.4%;
   --card: 0 0% 100%;
-  --card-foreground: 232 37% 12%;
+  --card-foreground: 232.2 36.5% 12.4%;
   --popover: 0 0% 100%;
-  --popover-foreground: 232 37% 12%;
+  --popover-foreground: 232.2 36.5% 12.4%;
   /* The CTA: gold fill, ink text. Never white text on gold — 2.9:1. */
-  --primary: 39 58% 46%;
-  --primary-foreground: 232 37% 12%;
+  --primary: 39.3 57.6% 46.3%;
+  --primary-foreground: 232.2 36.5% 12.4%;
   --secondary: 220 23% 97%;
-  --secondary-foreground: 217 71% 14%;
+  --secondary-foreground: 216.7 71% 13.5%;
   --muted: 220 23% 97%;
-  --muted-foreground: 230 18% 33%;
+  --muted-foreground: 230.3 18.3% 33.1%;
   --accent: 220 23% 97%;
-  --accent-foreground: 217 71% 14%;
+  --accent-foreground: 216.7 71% 13.5%;
   --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
   --success: 152 83% 26%;
   --warning: 22 92% 37%;
-  --info: 215 50% 42%; /* navy-bright — links */
+  --info: 214.5 50% 41.6%; /* navy-bright — links */
   --border: 218 17% 91%;
   --input: 222 19% 86%;
-  --ring: 215 50% 42%;
+  --ring: 214.5 50% 41.6%;
 
   /* ---- paper / ink ------------------------------------------------------ */
   --paper: 0 0% 100%;
   --paper-deep: 220 23% 97%;
   --line: 218 17% 91%;
-  --ink: 232 37% 12%; /* #14172B */
-  --ink-soft: 230 18% 33%; /* #454A64 */
+  --ink: 232.2 36.5% 12.4%; /* #14172B */
+  --ink-soft: 230.3 18.3% 33.1%; /* #454A64 */
   /* Darker than the Brian site's #6B7089: at 48% it measures 4.49:1 against
      --paper-deep, i.e. it fails AA by a hundredth on the panelled sections
      where most of the small print actually sits. 46% clears 4.8:1 on both
@@ -104,12 +109,12 @@
   --navy-soft: 225 43% 72%; /* #97A7D6 */
   --navy-bright: 225 43% 72%;
 
-  --gold: 45 72% 56%; /* #E0B83F — Gold Light, the only gold on navy grounds */
+  --gold: 44.9 72.1% 56.3%; /* #E0B83F — Gold Light, the only gold on navy grounds */
   --gold-hover: 43 70% 64%;
   --gold-deep: 45 72% 56%;
   --gold-light: 43 70% 66%;
 
-  --background: 232 37% 12%;
+  --background: 232.2 36.5% 12.4%;
   --foreground: 44 38% 92%;
   --card: 233 39% 17%;
   --card-foreground: 44 38% 92%;
@@ -132,7 +137,7 @@
   --input: 233 30% 32%;
   --ring: 225 43% 72%;
 
-  --paper: 232 37% 12%;
+  --paper: 232.2 36.5% 12.4%;
   --paper-deep: 233 39% 17%;
   --line: 233 31% 26%;
   --ink: 44 38% 92%; /* #F3EFE4 */

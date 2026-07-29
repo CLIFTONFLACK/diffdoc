@@ -20,18 +20,20 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const siteUrl = "https://diffdoc.cliftonai.co";
+const siteUrl = "https://diffdoc.getbrian.xyz";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  // Title convention matches the sibling product sites (flow.getbrian.xyz:
+  // "ContentFlow, built by Brian — …").
   title: {
-    default: "DiffDoc — see exactly what changed",
+    default: "DiffDoc, built by Brian — see exactly what changed",
     template: "%s · DiffDoc",
   },
   description:
     "Drop in two versions of a document. DiffDoc reads both, scores how far they've drifted, and marks up every insertion, deletion and edit. Built by Brian.",
   openGraph: {
-    title: "DiffDoc — see exactly what changed",
+    title: "DiffDoc, built by Brian — see exactly what changed",
     description:
       "One clause changed. Did anyone catch it? DiffDoc marks up exactly what moved between two versions of a document, then lets you comment, edit and export it.",
     url: siteUrl,
