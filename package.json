@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "provision:sql": "node scripts/build-provision-sql.mjs",
+    "check:supabase": "node scripts/check-supabase-key.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },
