@@ -33,6 +33,10 @@ function parseEnv(path) {
   return out;
 }
 
+/** Catch an unsubstituted placeholder instead of reporting it as a bad key. */
+const PLACEHOLDER =
+  /^(<.*>|PASTE.*|paste.*|YOUR.*|your[-_ ].*|xxx+|\.\.\.|TODO|CHANGEME)$/i;
+
 /** Decode a JWT payload without verifying it — we only want the claims. */
 function claims(key) {
   const parts = key.split(".");
@@ -47,6 +51,12 @@ function claims(key) {
 
 function describe(name, value) {
   if (!value) return { name, verdict: "MISSING" };
+  if (PLACEHOLDER.test(value)) {
+    return {
+      name,
+      verdict: `PLACEHOLDER NOT REPLACED ("${value}") — nothing was tested`,
+    };
+  }
   if (value.startsWith("sb_publishable_") || value.startsWith("sb_secret_")) {
     // New-style keys carry no readable claims; they can only be probed.
     return { name, format: "new-style", ref: "(not encoded in key)", role: "—" };
