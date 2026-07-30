@@ -15,10 +15,15 @@
  */
 import { readFileSync } from "node:fs";
 
-// DiffDoc's database. It lives in Supabase org qcjmbwaqgfijmxpsjjpb — NOT in
-// "SLA Team", which is a different org holding unrelated projects. Override with
-// argv[2] if that ever changes.
-const EXPECTED_REF = process.argv[2] ?? "pjcbkqbxajtykwfgawli";
+/**
+ * Which project to expect. By default this is derived from
+ * NEXT_PUBLIC_SUPABASE_URL rather than hard-coded: the script's job is to check
+ * that the keys match the URL they're used with and that the endpoint is alive,
+ * not to know which project is canonical. A hard-coded ref here was wrong twice
+ * and each time it reported a correct config as "WRONG PROJECT", which is worse
+ * than reporting nothing. Pass a ref as argv[2] to assert a specific one.
+ */
+const EXPECTED_REF_OVERRIDE = process.argv[2] ?? null;
 
 function parseEnv(path) {
   const out = {};
@@ -100,9 +105,16 @@ for (const k of [
 }
 const url = env.NEXT_PUBLIC_SUPABASE_URL ?? "(unset)";
 const urlRef = url.match(/https:\/\/([a-z0-9]+)\.supabase\.co/)?.[1];
+const EXPECTED_REF = EXPECTED_REF_OVERRIDE ?? urlRef;
 
-console.log(`expecting project ref : ${EXPECTED_REF}`);
-console.log(`NEXT_PUBLIC_SUPABASE_URL -> ${url}  ${urlRef === EXPECTED_REF ? "OK" : "MISMATCH"}`);
+console.log(
+  `expecting project ref : ${EXPECTED_REF ?? "(could not read one)"}` +
+    (EXPECTED_REF_OVERRIDE ? " (from argv)" : " (from NEXT_PUBLIC_SUPABASE_URL)"),
+);
+if (EXPECTED_REF_OVERRIDE && urlRef && urlRef !== EXPECTED_REF_OVERRIDE) {
+  console.log(`! NEXT_PUBLIC_SUPABASE_URL points at ${urlRef}, not ${EXPECTED_REF_OVERRIDE}`);
+}
+console.log(`NEXT_PUBLIC_SUPABASE_URL -> ${url}`);
 console.log("");
 
 const rows = [
@@ -124,6 +136,21 @@ for (const r of rows) {
 const anon = rows[0], svc = rows[1];
 if (anon.role && anon.role !== "anon") console.log(`\n! ANON slot holds a '${anon.role}' key`);
 if (svc.role && svc.role !== "service_role") console.log(`\n! SERVICE slot holds a '${svc.role}' key`);
+
+// Is the host even there? A paused or non-existent project NXDOMAINs, and the
+// two are indistinguishable from outside — so say that rather than guessing.
+if (urlRef) {
+  const { promises: dns } = await import("node:dns");
+  try {
+    await dns.lookup(`${urlRef}.supabase.co`);
+    console.log(`\nhost ${urlRef}.supabase.co resolves`);
+  } catch {
+    console.log(
+      `\nhost ${urlRef}.supabase.co does NOT resolve — that project is paused, or does not exist.` +
+        `\n  (these look identical from here; check the Supabase dashboard for the owning org)`,
+    );
+  }
+}
 
 // Live probe with whatever the service slot holds.
 if (env.SUPABASE_SERVICE_ROLE_KEY && urlRef) {
