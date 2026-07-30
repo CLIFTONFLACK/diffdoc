@@ -1001,7 +1001,11 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
               >
                 Select all
               </button>
-              <span className="text-line">·</span>
+              {/* --line is the border token (#E4E7EC): as a text colour it
+                  measures 1.24:1 on white, i.e. invisible. */}
+              <span aria-hidden className="text-ink-faint">
+                ·
+              </span>
               <button
                 onClick={() => {
                   setActiveCategories(new Set());
