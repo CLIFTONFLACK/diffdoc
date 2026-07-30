@@ -15,7 +15,10 @@
  */
 import { readFileSync } from "node:fs";
 
-const EXPECTED_REF = process.argv[2] ?? "sngukuhttvamqtiuuwpz";
+// DiffDoc's database. It lives in Supabase org qcjmbwaqgfijmxpsjjpb — NOT in
+// "SLA Team", which is a different org holding unrelated projects. Override with
+// argv[2] if that ever changes.
+const EXPECTED_REF = process.argv[2] ?? "pjcbkqbxajtykwfgawli";
 
 function parseEnv(path) {
   const out = {};
