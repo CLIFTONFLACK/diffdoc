@@ -63,7 +63,28 @@ function describe(name, value) {
   };
 }
 
-const env = parseEnv(".env.local");
+// Anything already exported wins over .env.local, so a candidate value can be
+// tested without writing it to disk first:
+//   SUPABASE_SERVICE_ROLE_KEY='<paste>' node scripts/check-supabase-key.mjs
+const fileEnv = parseEnv(".env.local");
+const env = {};
+for (const k of [
+  "NEXT_PUBLIC_SUPABASE_URL",
+  "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+  "SUPABASE_SERVICE_ROLE_KEY",
+]) {
+  env[k] = process.env[k] || fileEnv[k];
+  if (env[k] !== fileEnv[k] && process.env[k]) {
+    console.log(`(${k} taken from the environment, not .env.local)`);
+  }
+  // A trailing newline or stray space survives a dashboard paste and reads as
+  // "Invalid API key" with no other symptom. Flag it rather than trimming it
+  // silently, because the copy in Vercel needs fixing too.
+  if (env[k] && env[k] !== env[k].trim()) {
+    console.log(`! ${k} has leading/trailing whitespace — that alone breaks it`);
+    env[k] = env[k].trim();
+  }
+}
 const url = env.NEXT_PUBLIC_SUPABASE_URL ?? "(unset)";
 const urlRef = url.match(/https:\/\/([a-z0-9]+)\.supabase\.co/)?.[1];
 
