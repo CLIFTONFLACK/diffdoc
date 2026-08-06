@@ -20,7 +20,15 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle dark mode">
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={toggle}
+      aria-label="Toggle dark mode"
+      // size="icon" is h-9 w-9 (36px); this is an icon-only control with no
+      // text to widen its hit area, so it needs the 44px minimum explicitly.
+      className="h-11 w-11"
+    >
       <Sun className="hidden dark:block" />
       <Moon className="block dark:hidden" />
     </Button>

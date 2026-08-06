@@ -186,14 +186,49 @@
   h3 {
     letter-spacing: -0.01em;
   }
-  /* UI base is comfortable, but keep inputs >=16px on mobile to avoid iOS zoom */
-  @media (max-width: 640px) {
-    input,
-    textarea,
-    select {
-      font-size: 16px;
-    }
+}
+
+/* iOS Safari force-zooms the viewport whenever a focused field is under 16px,
+ * and never zooms back out.
+ *
+ * This lived inside `@layer base`, where it did nothing: a base-layer rule
+ * loses to any utility, and the shadcn primitives carry `text-sm`. Left
+ * deliberately UNLAYERED — unlayered CSS outranks every @layer, including
+ * Tailwind's utilities, so it wins without !important. */
+@media (max-width: 640px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    font-size: 16px;
   }
+}
+
+/* Opt-in 44px touch minimum for a dense control cluster. Unlayered so it beats
+ * the utilities that set the compact sizes, and phone-only so the desktop
+ * density that makes a side-by-side diff readable is untouched. */
+@media (max-width: 640px) {
+  .touch-ui button,
+  .touch-ui [role="button"] {
+    min-height: 44px;
+    /* Icon-only controls have no text to widen them — several measured 26px
+       across. Text buttons already exceed this, so it changes nothing there. */
+    min-width: 44px;
+  }
+}
+
+html {
+  /* The header is sticky, so a bare #anchor jump lands under it. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  /* Stops rubber-band scroll chaining to browser chrome / pull-to-refresh. */
+  overscroll-behavior-y: none;
+  /* In landscape the notch eats into one side; without these the sticky header
+     and the footer run under it. Resolves to 0 on hardware with no cutout, and
+     needs viewport-fit=cover (set in layout.tsx) to resolve at all. */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 @layer components {

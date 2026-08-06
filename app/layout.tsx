@@ -1,7 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+
+/**
+ * `viewportFit: "cover"` is what makes `env(safe-area-inset-*)` resolve to a
+ * real value instead of 0 — without it, bottom-docked UI sits under the iPhone
+ * home indicator. `userScalable` is left alone so pinch-zoom stays available.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 // Brand book ch. 03: Space Grotesk for headings, DM Sans for body. Geist Mono
 // stays for the diff gutters, similarity figures and file paths — that's a

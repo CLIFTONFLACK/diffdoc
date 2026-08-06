@@ -70,7 +70,9 @@ export function Workspace() {
   const currentMode = MODES.find((m) => m.id === mode)!;
 
   return (
-    <div className="min-h-screen bg-paper-deep text-ink font-sans">
+    // `touch-ui` lifts this view's dense controls to a 44px minimum on phones —
+    // several measured 22px. Scoped here so desktop keeps its density.
+    <div className="touch-ui min-h-screen bg-paper-deep text-ink font-sans">
       <header className="border-b border-line bg-card">
         <div className="px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-8">

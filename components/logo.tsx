@@ -45,7 +45,7 @@ export function Logo({
       href="/"
       aria-label="GetBrian DiffDoc — home"
       className={cn(
-        "inline-flex min-w-0 items-center rounded-md no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "inline-flex min-h-11 min-w-0 items-center rounded-md no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         lg ? "gap-2.5" : "gap-2",
         className,
       )}
@@ -145,7 +145,7 @@ export function BuiltByGetBrian({ className }: { className?: string }) {
       target="_blank"
       rel="noopener"
       className={cn(
-        "group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-border px-[0.8rem] py-[0.35rem] text-[0.85rem] text-ink-soft no-underline transition-colors duration-200 hover:border-navy hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "group inline-flex min-h-11 items-center gap-2 whitespace-nowrap rounded-full border border-border px-[0.8rem] py-[0.35rem] text-[0.85rem] text-ink-soft no-underline transition-colors duration-200 hover:border-navy hover:text-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
     >

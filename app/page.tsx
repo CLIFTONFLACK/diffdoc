@@ -13,6 +13,7 @@ import { UploadWidget } from "@/components/upload-widget";
 import { Pricing } from "@/components/pricing";
 import { BuiltByGetBrian, Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { MobileNav } from "@/components/mobile-nav";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -275,18 +276,34 @@ function SiteHeader() {
         <nav className="flex items-center gap-1 sm:gap-2">
           <a
             href="#pricing"
-            className="hidden px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink sm:block"
+            className="hidden min-h-11 items-center px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink sm:inline-flex"
           >
             Pricing
           </a>
           <ThemeToggle />
+          {/* Pricing and Sign in move in here below 640px — measured, the row
+              cannot fit them alongside the lockup and the CTA at 390px. */}
+          <MobileNav
+            items={[
+              { href: "#pricing", label: "Pricing" },
+              { href: "/login", label: "Sign in" },
+            ]}
+          />
           <Link
             href="/login"
-            className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "hidden min-h-11 sm:inline-flex",
+            )}
           >
             Sign in
           </Link>
-          <Link href="/signup" className={cn(buttonVariants({ size: "sm" }))}>
+          {/* size="sm" is h-8 (32px); min-h-11 lifts the one control a phone
+              user actually needs to the 44px touch minimum. */}
+          <Link
+            href="/signup"
+            className={cn(buttonVariants({ size: "sm" }), "min-h-11")}
+          >
             Start free
           </Link>
         </nav>
@@ -309,7 +326,7 @@ function SiteFooter() {
               href="https://getbrian.xyz"
               target="_blank"
               rel="noopener"
-              className="-my-2 inline-flex items-center gap-1 py-2.5 text-xs font-medium text-navy-bright hover:underline"
+              className="-my-2 inline-flex min-h-11 items-center gap-1 py-2.5 text-xs font-medium text-navy-bright hover:underline"
             >
               See the lot
               <ArrowUpRight className="h-3 w-3" aria-hidden />
@@ -353,7 +370,7 @@ function SiteFooter() {
             <Link
               key={l.label}
               href={l.href}
-              className="rounded px-2 py-2.5 transition-colors hover:text-ink"
+              className="inline-flex min-h-11 items-center rounded px-2 py-2.5 transition-colors hover:text-ink"
             >
               {l.label}
             </Link>

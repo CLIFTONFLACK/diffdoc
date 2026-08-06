@@ -668,7 +668,11 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-paper text-ink font-sans">
+    // `touch-ui` lifts this view's dense toolbar controls to a 44px minimum on
+    // phones. The diff chrome is tuned for a mouse — several controls measured
+    // 22-26px, well under the touch minimum — and scoping it here keeps the
+    // desktop density that makes a side-by-side diff readable.
+    <div className="touch-ui h-screen flex flex-col bg-paper text-ink font-sans">
       <header className="border-b border-line px-6 py-2.5 flex items-center justify-between gap-6 print-hide">
         <div className="flex items-center gap-5 min-w-0">
           <span className="flex-shrink-0">
