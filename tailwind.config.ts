@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * The GetBrian brand system — navy + gold on white, Space Grotesk headings over
+ * The GetBrian brand system — navy + gold on white, Bricolage Grotesque headings over
  * DM Sans body. Colors are wired to CSS variables (see app/globals.css) as
  * `hsl(var(--x) / <alpha-value>)` so opacity modifiers work (bg-primary/90,
  * border-flag/30, …).
@@ -102,13 +102,13 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // Brand book ch. 03: Space Grotesk headings, DM Sans body. Mono is a
+        // Bricolage Grotesque headings (as on getbrian.xyz), DM Sans body. Mono is a
         // functional need (diff gutters, hashes, file paths), not brand type —
         // Geist Mono stays.
         sans: ["var(--font-dm-sans)", "DM Sans", "-apple-system", "sans-serif"],
         display: [
-          "var(--font-space-grotesk)",
-          "Space Grotesk",
+          "var(--font-heading)",
+          "Bricolage Grotesque",
           "var(--font-dm-sans)",
           "sans-serif",
         ],
