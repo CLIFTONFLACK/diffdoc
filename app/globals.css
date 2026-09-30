@@ -179,8 +179,7 @@
     @apply bg-background text-ink font-sans;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  /* Space Grotesk is a touch loose at display sizes; the brand book sets
-     headings at -0.01em. */
+  /* Bricolage Grotesque headings run tight, as on getbrian.xyz. */
   h1,
   h2,
   h3 {

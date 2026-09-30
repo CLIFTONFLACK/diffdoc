@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
-import { DM_Sans, Space_Grotesk } from "next/font/google";
+import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import "./globals.css";
 
 /**
@@ -14,13 +14,15 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-// Brand book ch. 03: Space Grotesk for headings, DM Sans for body. Geist Mono
+// Bricolage Grotesque for headings and the wordmark (matches getbrian.xyz), DM Sans for body. Geist Mono
 // stays for the diff gutters, similarity figures and file paths — that's a
 // functional need, not brand type.
-const spaceGrotesk = Space_Grotesk({
+// Variable font: no `weight` list, so 600-800 all come from one file. The opsz
+// axis is what gives it the tight display cut at large sizes.
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-space-grotesk",
+  axes: ["opsz"],
+  variable: "--font-heading",
   display: "swap",
 });
 
@@ -65,7 +67,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmSans.variable} ${GeistMono.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${GeistMono.variable} ${bricolage.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
