@@ -154,7 +154,7 @@ export function Analytics() {
           aria-label="Cookie choice"
           className="fixed inset-x-4 bottom-4 z-40 mx-auto max-w-md rounded-2xl border border-border bg-card p-5 shadow-xl pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:left-auto sm:right-4 sm:mx-0"
         >
-          <h2 className="font-heading text-base font-semibold text-card-foreground">Cookies</h2>
+          <h2 className="font-display text-base font-semibold text-card-foreground">Cookies</h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Can we use Google Analytics cookies to see which pages people visit? No ads and nothing is sold. We
             remember your choice on this device, and you can change it any time with the &ldquo;Cookie settings&rdquo; link.
