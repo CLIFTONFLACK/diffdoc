@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "provision:sql": "node scripts/build-provision-sql.mjs",
     "check:supabase": "node scripts/check-supabase-key.mjs",
-    "test": "vitest run",
+    "test:consent": "node --test test/consent.nodetest.ts",
+    "test": "vitest run && npm run test:consent",
     "test:watch": "vitest"
   },
   "dependencies": {

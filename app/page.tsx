@@ -9,6 +9,7 @@ import {
   ScanSearch,
 } from "lucide-react";
 
+import { CookieSettingsButton } from "./analytics";
 import { UploadWidget } from "@/components/upload-widget";
 import { Pricing } from "@/components/pricing";
 import { BuiltByGetBrian, Logo } from "@/components/logo";
@@ -359,6 +360,7 @@ function SiteFooter() {
               {l.label}
             </Link>
           ))}
+          <CookieSettingsButton />
         </div>
 <BuiltByGetBrian />
       </div>
