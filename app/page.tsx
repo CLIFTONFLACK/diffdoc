@@ -349,6 +349,7 @@ function SiteFooter() {
             { href: "#pricing", label: "Pricing" },
             { href: "/login", label: "Sign in" },
             { href: "/signup", label: "Start free" },
+            { href: "mailto:diffdoc@getbrian.xyz", label: "Contact" },
           ].map((l) => (
             <Link
               key={l.label}
