@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import vm from "node:vm";
 import {
   GA_MEASUREMENT_ID,
+  PRIVACY_HREF,
   cleanAddress,
   clearGaCookies,
   disableFlag,
@@ -51,6 +52,7 @@ test("only the public marketing page is measured", () => {
     "/login",
     "/signup",
     "/tasks",
+    "/cookies",
     "/c/abc123",
     "/c/abc123/edit",
     "/api/comparisons",
@@ -63,6 +65,12 @@ test("only the public marketing page is measured", () => {
     assert.equal(isTrackedPath(p), false, p);
     assert.equal(isExcludedPath(p), true, p);
   }
+});
+
+test("the banner links to the cookies notice, and that page is itself never measured", () => {
+  assert.equal(PRIVACY_HREF, "/cookies");
+  assert.equal(isTrackedPath(PRIVACY_HREF as string), false);
+  assert.equal(isExcludedPath(PRIVACY_HREF as string), true);
 });
 
 test("only an exact stored choice counts; anything else means 'not asked'", () => {
