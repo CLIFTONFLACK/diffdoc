@@ -345,7 +345,7 @@ function SiteFooter() {
           row while giving each one a ~44px tap target. */}
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-3 px-6 py-8 text-sm text-ink-soft sm:flex-row">
         <Logo size="sm" className="-my-2 py-2" />
-        <div className="-my-2 flex items-center gap-3">
+        <div className="-my-2 flex flex-wrap items-center justify-center gap-x-3">
           {[
             { href: "#pricing", label: "Pricing" },
             { href: "/login", label: "Sign in" },
