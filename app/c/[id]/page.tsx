@@ -87,7 +87,7 @@ export default function ComparisonPage({ params }: { params: { id: string } }) {
             </p>
             <a
               href="/"
-              className="inline-block px-5 py-2 text-sm font-medium bg-primary text-primary-foreground rounded-lg hover:bg-gold-hover transition-colors"
+              className="inline-block px-5 py-2 text-sm font-medium bg-cta text-cta-foreground rounded-lg hover:bg-gold-hover transition-colors"
             >
               Start a new comparison
             </a>

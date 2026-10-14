@@ -44,6 +44,10 @@ const config: Config = {
           DEFAULT: hsl("--popover"),
           foreground: hsl("--popover-foreground"),
         },
+        cta: {
+          DEFAULT: hsl("--cta"),
+          foreground: hsl("--cta-foreground"),
+        },
         primary: {
           DEFAULT: hsl("--primary"),
           foreground: hsl("--primary-foreground"),

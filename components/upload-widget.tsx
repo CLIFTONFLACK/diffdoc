@@ -111,6 +111,7 @@ export function UploadWidget({
         <Button
           onClick={compare}
           disabled={!canCompare}
+          variant="cta"
           size="lg"
           className="w-full sm:w-auto"
         >

@@ -102,7 +102,9 @@ export function AuthPanel({ mode }: { mode: "sign-in" | "sign-up" }) {
                 </p>
               )}
 
-              <Button type="submit" className="w-full">
+              {/* Sign-up is this view's conversion action, so it takes the gold
+                  CTA; signing in is an everyday action and stays navy. */}
+              <Button type="submit" variant={isSignUp ? "cta" : "default"} className="w-full">
                 {isSignUp ? "Create account" : "Sign in"}
               </Button>
             </form>

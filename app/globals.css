@@ -49,14 +49,19 @@
   --card-foreground: 232.2 36.5% 12.4%;
   --popover: 0 0% 100%;
   --popover-foreground: 232.2 36.5% 12.4%;
+  /* Primary is navy: structure, app chrome, everyday actions (brand book:
+     navy for everything structural). Gold is kept for the one conversion
+     action per view, through --cta below. */
+  --primary: 216.7 71% 13.5%;
+  --primary-foreground: 0 0% 100%;
   /* The CTA: gold fill, ink text. Never white text on gold — 2.9:1. */
-  --primary: 39.3 57.6% 46.3%;
-  --primary-foreground: 232.2 36.5% 12.4%;
-  --secondary: 220 23% 97%;
+  --cta: 39.3 57.6% 46.3%;
+  --cta-foreground: 232.2 36.5% 12.4%;
+  --secondary: 220 14.3% 95.9%;
   --secondary-foreground: 216.7 71% 13.5%;
-  --muted: 220 23% 97%;
+  --muted: 220 14.3% 95.9%;
   --muted-foreground: 230.3 18.3% 33.1%;
-  --accent: 220 23% 97%;
+  --accent: 220 14.3% 95.9%;
   --accent-foreground: 216.7 71% 13.5%;
   --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
@@ -69,13 +74,13 @@
 
   /* ---- paper / ink ------------------------------------------------------ */
   --paper: 0 0% 100%;
-  --paper-deep: 220 23% 97%;
+  --paper-deep: 220 14.3% 95.9%;
   --line: 218 17% 91%;
   --ink: 232.2 36.5% 12.4%; /* #14172B */
   --ink-soft: 230.3 18.3% 33.1%; /* #454A64 */
   /* Darker than the Brian site's #6B7089: at 48% it measures 4.49:1 against
      --paper-deep, i.e. it fails AA by a hundredth on the panelled sections
-     where most of the small print actually sits. 46% clears 4.8:1 on both
+     where most of the small print actually sits. 46% clears 4.7:1 on both
      grounds. */
   --ink-faint: 230 12% 46%;
 
@@ -120,8 +125,10 @@
   --card-foreground: 44 38% 92%;
   --popover: 233 39% 17%;
   --popover-foreground: 44 38% 92%;
-  --primary: 45 72% 56%;
-  --primary-foreground: 46 87% 9%; /* #2A2103 — the book's --spark-ink */
+  --primary: 225 43% 72%; /* #97A7D6 — navy reverses to the book's dark blue */
+  --primary-foreground: 232.2 36.5% 12.4%;
+  --cta: 45 72% 56%;
+  --cta-foreground: 46 87% 9%; /* #2A2103 — the book's --spark-ink */
   --secondary: 233 31% 22%;
   --secondary-foreground: 44 38% 92%;
   --muted: 233 31% 22%;

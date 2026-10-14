@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import "./globals.css";
@@ -42,7 +42,36 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "DiffDoc",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "GetBrian DiffDoc — see exactly what changed",
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "DiffDoc, built by Brian — see exactly what changed",
+    description:
+      "One clause changed. Did anyone catch it? DiffDoc marks up exactly what moved between two versions of a document.",
+    images: ["/og-image.png"],
+  },
+  // The masterbrand icon set, same files and paths as www.getbrian.xyz.
+  // public/favicon.ico is served at /favicon.ico for the Vercel project tile.
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 };
 
 // Apply the saved/system theme before paint to avoid a flash of the wrong theme.

@@ -9,15 +9,16 @@ import { cn } from "@/lib/utils";
  *   .lockup      inline-flex, align-items center, gap .6rem
  *   .lockup-mark height 40px, width auto
  *   .wordmark    display face, 600, 1.4rem, -0.02em
- *   .wm-get      Brian Navy      .wm-brian  Gold Deep
- *   .product-tag same type, navy, 1px left keyline, .8rem padding + margin,
- *                hidden below 520px
+ *   .wm-get      Brian Navy      .wm-brian  Brian Gold
+ *   .product-tag display face, 500, ink-muted, 2px navy-bright bar 0.9em
+ *                tall before it, hidden below 520px
  *
  * Two brand-book rules are enforced here rather than left to call sites:
  *
- *  • **"Brian" is Gold Deep, never Brian Gold.** At lockup sizes Brian Gold is
- *    3.1:1 on white and fails AA; Gold Deep is 5.3:1. (crm.getbrian.xyz sets
- *    this one with the full gold and is failing contrast because of it.)
+ *  • **"Brian" is Brian Gold (#BA8B32), as on every sibling lockup.** It
+ *    measures 3.1:1 on white, which is allowed: WCAG 1.4.3 exempts text that
+ *    is part of a logo or brand name. Gold Deep stays the rule for all other
+ *    gold text on white.
  *  • **Never set the display cut below 40px.** The mark's B has no left stem —
  *    the gold traces running into its open counter are what close the letter,
  *    and below ~40px the display cut silts into mud and reads as a 3. `size="sm"`
@@ -58,18 +59,21 @@ export function Logo({
         )}
       >
         <span className="text-navy">Get</span>
-        <span className="text-gold-deep">Brian</span>
-        {/* Below 520px the product word drops and the wordmark carries the
-            lockup on its own — same rule as the sibling sites. The keyline is
-            a border on the product word rather than its own element, so it
-            can't be left dangling after "GetBrian" when the word hides. */}
-        <span
-          className={cn(
-            "hidden truncate self-center border-l border-border text-navy min-[520px]:inline-block",
-            lg ? "ml-[0.8rem] pl-[0.8rem]" : "ml-2.5 pl-2.5",
-          )}
-        >
-          DiffDoc
+        <span className="text-gold">Brian</span>
+        {/* Below 520px the product word and its bar drop together and the
+            wordmark carries the lockup on its own — same rule as the sibling
+            sites. */}
+        <span className="hidden min-w-0 items-center min-[520px]:inline-flex">
+          <span
+            aria-hidden="true"
+            className={cn(
+              "inline-block h-[0.9em] w-0.5 shrink-0 bg-navy-bright",
+              lg ? "mx-2" : "mx-1.5",
+            )}
+          />
+          <span className="truncate font-medium text-ink-soft">
+            DiffDoc
+          </span>
         </span>
       </span>
     </Link>
@@ -141,7 +145,7 @@ export function BrandMark({
 export function BuiltByGetBrian({ className }: { className?: string }) {
   return (
     <a
-      href="https://getbrian.xyz"
+      href="https://www.getbrian.xyz"
       target="_blank"
       rel="noopener"
       className={cn(

@@ -100,7 +100,7 @@ export function Pricing() {
               )}
             >
               {tier.featured && (
-                <span className="absolute -top-3 left-6 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
+                <span className="absolute -top-3 left-6 rounded-full bg-cta px-3 py-1 text-xs font-semibold text-cta-foreground">
                   Most popular
                 </span>
               )}
