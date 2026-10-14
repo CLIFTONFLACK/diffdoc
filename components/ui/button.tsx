@@ -4,9 +4,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * Brand-book note on `default`: the CTA is a Brian Gold fill with **ink** text
- * on top (5.8:1). White on gold is 2.9:1 and is never allowed. The hover state
- * is Gold Hover — not Gold Deep, which drops ink to 3.3:1.
+ * `default` is navy (the primary token): structure and everyday actions.
+ *
+ * `cta` is the one conversion action per view: a Brian Gold fill with **ink**
+ * text on top (5.8:1). White on gold is 2.9:1 and is never allowed. The hover
+ * state is Gold Hover — not Gold Deep, which drops ink to 3.3:1.
  */
 export const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0",
@@ -14,7 +16,8 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-gold-hover shadow-sm",
+          "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
+        cta: "bg-cta text-cta-foreground hover:bg-gold-hover shadow-sm",
         // Navy reverses to a light blue in dark mode, so the solid-navy button
         // becomes a raised panel there rather than light-on-light.
         navy: "bg-navy text-white hover:bg-navy-mid shadow-sm dark:bg-secondary dark:text-ink dark:hover:bg-muted",

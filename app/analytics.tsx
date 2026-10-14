@@ -178,7 +178,7 @@ export function Analytics() {
             <button
               type="button"
               onClick={() => choose("granted")}
-              className="min-h-12 cursor-pointer rounded-full border border-primary bg-primary px-4 text-base font-semibold text-primary-foreground transition-colors duration-200 hover:bg-gold-hover"
+              className="min-h-12 cursor-pointer rounded-full border border-primary bg-primary px-4 text-base font-semibold text-primary-foreground transition-colors duration-200 hover:bg-primary/90"
             >
               Accept
             </button>

@@ -741,7 +741,7 @@ export function ComparisonView({ data }: { data: ComparisonData }) {
                   "Create a free account to download marked-up .docx & .pdf exports and the audit report.",
                 )
               }
-              className="px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.12em] rounded-lg bg-primary text-primary-foreground hover:bg-gold-hover transition-colors cursor-pointer flex items-center gap-1.5"
+              className="px-4 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.12em] rounded-lg bg-cta text-cta-foreground hover:bg-gold-hover transition-colors cursor-pointer flex items-center gap-1.5"
               aria-haspopup="menu"
               aria-expanded={downloadOpen}
             >

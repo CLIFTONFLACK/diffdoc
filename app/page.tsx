@@ -83,7 +83,7 @@ export default function Home() {
                 <span className="brand-gradient-text">Did anyone catch it?</span>
               </h1>
 
-              <div className="mt-6 h-1 w-14 rounded-full bg-primary" />
+              <div className="mt-6 h-1 w-14 rounded-full bg-cta" />
 
               <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-ink-soft">
                 Drop in two versions of a document. DiffDoc reads both, scores how far
@@ -132,7 +132,7 @@ export default function Home() {
                   <>
                     <span
                       aria-hidden
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground"
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cta text-xs font-bold text-cta-foreground"
                     >
                       1
                     </span>
@@ -299,15 +299,16 @@ function SiteHeader() {
 function SiteFooter() {
   return (
     <footer className="border-t">
-      {/* More Brian builds — the cross-sell band */}
+      {/* More from Brian — the cross-sell band, same label and plain names as
+          every sibling site */}
       <div className="border-b bg-paper-deep">
         <div className="mx-auto w-full max-w-6xl px-6 py-10">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-faint">
-              More Brian builds
+              More from Brian
             </p>
             <a
-              href="https://getbrian.xyz"
+              href="https://www.getbrian.xyz"
               target="_blank"
               rel="noopener"
               className="-my-2 inline-flex items-center gap-1 py-2.5 text-xs font-medium text-navy-bright hover:underline"
@@ -326,7 +327,7 @@ function SiteFooter() {
                 className="group flex items-center justify-between gap-3 rounded-xl border bg-card px-4 py-3 transition-colors hover:border-navy-bright/45"
               >
                 <span className="min-w-0">
-                  <span className="block truncate text-sm font-semibold text-ink">
+                  <span className="block truncate text-sm font-semibold text-ink-soft">
                     {s.name}
                   </span>
                   <span className="block truncate text-xs text-ink-faint">{s.tag}</span>
@@ -363,8 +364,11 @@ function SiteFooter() {
           ))}
           <CookieSettingsButton />
         </div>
-<BuiltByGetBrian />
+        <BuiltByGetBrian />
       </div>
+      <p className="mx-auto w-full max-w-6xl px-6 pb-8 text-center text-xs text-ink-faint sm:text-left">
+        &copy; {new Date().getFullYear()} Brian. All rights reserved.
+      </p>
     </footer>
   );
 }

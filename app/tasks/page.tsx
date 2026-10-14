@@ -56,7 +56,7 @@ export default function TasksPage() {
           <ThemeToggle />
           <a
             href="/"
-            className="flex cursor-pointer items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-gold-hover"
+            className="flex cursor-pointer items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
           >
             <Plus className="h-4 w-4" /> New comparison
           </a>
@@ -104,7 +104,7 @@ export default function TasksPage() {
                   <p className="mb-4 text-ink-soft">No comparisons yet.</p>
                   <a
                     href="/"
-                    className="inline-block cursor-pointer rounded-md bg-primary px-5 py-2 text-sm font-medium text-primary-foreground shadow-sm hover:bg-gold-hover"
+                    className="inline-block cursor-pointer rounded-md bg-cta px-5 py-2 text-sm font-medium text-cta-foreground shadow-sm hover:bg-gold-hover"
                   >
                     Run your first comparison
                   </a>
